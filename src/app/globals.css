@@ -8,20 +8,36 @@
   --background-end-rgb: 255, 255, 255;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+body {
+  @apply bg-primary-100
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+@layer components {
+  .title-x {
+    @apply text-title-x leading-title-x font-bold;
+  }
+  .title-1 {
+    @apply text-title-l leading-title-l font-bold;
+  }
+  .title-2 {
+    @apply text-title-m leading-title-m font-semibold;
+  }
+  .title-3 {
+    @apply text-title-s leading-title-m font-semibold;
+  }
+  .regular-l {
+    @apply text-text-x leading-text-x font-medium;
+  }
+  .regular-m {
+    @apply text-text-x leading-text-m font-semibold;
+  }
+  .regular-s {
+    @apply text-text-l leading-text-l font-medium;
+  }
+  .regular-xs {
+    @apply text-text-m leading-text-m font-medium;
+  }
+  .regular-xxs {
+    @apply text-text-s leading-text-s font-medium;
+  }
 }
