@@ -14,9 +14,9 @@ export default async function SignIn() {
         <p className='regular-m font-medium text-light-20 text-center'>Tenha controle sobre seus gastos</p>
       </div>
       <div className="w-full flex flex-col justify-center">
-        <Suspense fallback={<Spinner />}>
+        {/* <Suspense fallback={<Spinner />}> */}
           <AuthProviders />
-        </Suspense>
+        {/* </Suspense> */}
       </div>
     </main>
   );
