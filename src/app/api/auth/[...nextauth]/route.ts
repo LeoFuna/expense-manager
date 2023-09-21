@@ -1,13 +1,13 @@
-import NextAuth from 'next-auth';
+import NextAuth, { NextAuthOptions } from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 
 const ONE_DAY = 24 * 60 * 60;
 
-const authOptions = {
+const authOptions: NextAuthOptions = {
   providers: [
     GoogleProvider({
-      clientId: process.env.GOOGLE_ID,
-      clientSecret: process.env.GOOGLE_SECRET,
+      clientId: process.env.GOOGLE_ID as string,
+      clientSecret: process.env.GOOGLE_SECRET as string,
     }),
   ],
   jwt: {
@@ -44,7 +44,7 @@ const authOptions = {
   //     return '/signin';
   //   },
   // },
-  secret: process.env.JWT_SECRET,
+  secret: process.env.JWT_SECRET as string,
 };
 
 const handler = NextAuth(authOptions);
