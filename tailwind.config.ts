@@ -12,7 +12,7 @@ const config: Config = {
       'dark-50': '#464A4D',
       'dark-75': '#161719',
       'dark-100': '#0D0E0F',
-      'light-20': '#E3E5E5',
+      'light-20': '#91919F',
       'light-40': '#F2F4F5',
       'light-60': '#F7F9FA',
       'light-80': '#FBFBFB',
