@@ -1,8 +1,5 @@
-import TextComponent from '@/components/TextComponent';
 import AuthProviders from '@/components/auth/AuthProviders';
-import { Spinner } from '@/components/core/Spinner';
 import Image from 'next/image';
-import { Suspense } from 'react';
 
 export default async function SignIn() {
   return (
@@ -15,12 +12,7 @@ export default async function SignIn() {
         <p className='regular-m font-medium text-light-20 text-center'>Tenha controle sobre seus gastos</p>
       </div>
       <div className="w-full flex flex-col justify-center">
-        <Suspense fallback={<Spinner />}>
-          <AuthProviders />
-        </Suspense>
-        <Suspense fallback={<Spinner />}>
-          <TextComponent />
-        </Suspense>
+        <AuthProviders />
       </div>
     </main>
   );
