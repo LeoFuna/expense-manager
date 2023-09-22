@@ -1,18 +1,14 @@
 'use client'
 import { getProviders } from 'next-auth/react';
 import { LoginButton } from './LoginButton';
-import { useEffect, useState } from 'react';
+import wrapPromise from '@/utils/wrapPromise';
+
+const wrapedProviders = wrapPromise(getProviders().then((providers) => Object.values(providers ?? [])));
 
 export default function AuthProviders() {
-  const [oAuthProviders, setOAuthProviders] = useState<any[]>([]);
-  useEffect(() => {
-    getProviders().then((providers) => {
-      setOAuthProviders(Object.values(providers ?? []));
+  const oAuthProviders = wrapedProviders.read();
 
-    });
-  }, [])
-
-  return oAuthProviders.map((provider) => (
+  return oAuthProviders.map((provider: any) => (
     <LoginButton key={provider.id} provider={provider} />
   ));
 }
