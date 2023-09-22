@@ -1,3 +1,4 @@
+import TextComponent from '@/components/TextComponent';
 import AuthProviders from '@/components/auth/AuthProviders';
 import { Spinner } from '@/components/core/Spinner';
 import Image from 'next/image';
@@ -16,6 +17,9 @@ export default async function SignIn() {
       <div className="w-full flex flex-col justify-center">
         <Suspense fallback={<Spinner />}>
           <AuthProviders />
+        </Suspense>
+        <Suspense fallback={<Spinner />}>
+          <TextComponent />
         </Suspense>
       </div>
     </main>
