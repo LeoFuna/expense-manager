@@ -11,7 +11,6 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   jwt: {
-    secret: process.env.JWT_SECRET,
     maxAge: ONE_DAY,
   },
   session: {
@@ -20,29 +19,5 @@ export const authOptions: NextAuthOptions = {
   pages: {
     signIn: '/signin',
   },
-  // callbacks: {
-  //   async signIn({ user }) {
-  //     // if (user.email) {
-  //     //   try {
-  //     //     await userService.getUnique(user.email);
-  //     //     return true;
-  //     //   } catch (error: any) {
-  //     //     if (error.statusCode === 404) {
-  //     //       return userService
-  //     //         .create({ email: user.email, currentDate: new Date() })
-  //     //         .then(() => true)
-  //     //         .catch(() => {
-  //     //           console.log('Erro interno, tente novamente...');
-  //     //           return '/signin';
-  //     //         });
-  //     //     } else {
-  //     //       console.error(error);
-  //     //       return '/signin';
-  //     //     }
-  //     //   }
-  //     // }
-  //     return '/signin';
-  //   },
-  // },
-  secret: process.env.JWT_SECRET as string,
+  secret: process.env.NEXTAUTH_SECRET as string,
 };
