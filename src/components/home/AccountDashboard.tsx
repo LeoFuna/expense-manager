@@ -9,23 +9,23 @@ export default function AccountDashboard() {
       </div>
 
       <div className="flex justify-center w-full gap-4">
-        <div className="flex bg-success-100 w-2/4 p-4 rounded-3xl gap-2">
-          <div className="bg-light-100 flex items-center p-2 rounded-xl text-success-100">
+        <div className="flex items-center bg-success-100 w-2/4 p-4 rounded-3xl gap-2">
+          <div className="bg-light-100 flex items-center w-12 h-12 p-2 rounded-xl text-success-100">
             <FiTrendingUp size={24} />
           </div>
           <div className='text-light-100 flex flex-col items-start gap-2 w-3/4'>
             <h4 className='regular-s'>Entradas</h4>
-            <p className='title-3'>R$ 10.000</p>
+            <p className='title-2 text-base'>R$ 10.000</p>
           </div>
         </div>
 
         <div className="flex bg-danger-100 w-2/4 p-4 rounded-3xl gap-2">
-          <div className="bg-light-100 flex items-center p-2 rounded-xl text-danger-100">
+          <div className="bg-light-100 flex items-center w-12 h-12 p-2 rounded-xl text-danger-100">
             <FiTrendingDown size={24} />
           </div>
           <div className='text-light-100 flex flex-col items-start gap-2 w-3/4'>
             <h4 className='regular-s'>Saídas</h4>
-            <p className='title-3'>R$ 10.000</p>
+            <p className='title-2 text-base'>R$ 10.000</p>
           </div>
         </div>
       </div>
