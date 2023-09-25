@@ -5,4 +5,6 @@ import { NextRequest } from "next/server";
 
 const transactionController = new TransactionController(new TransactionService(new TransactionRepoFirebase()));
 
+export async function POST(request: NextRequest, { params }: { params: { email: string } }) { return transactionController.create(request, { params }); }
+
 export async function GET(request: NextRequest, { params }: { params: { email: string } }) { return transactionController.index(request, { params }); }

@@ -1,4 +1,5 @@
 export interface ITransaction {
+  id?: string;
   accountId: string;
   amountInCents: number;
   operationType: 'income' | 'outcome';
