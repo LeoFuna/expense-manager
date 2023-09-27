@@ -41,3 +41,13 @@ body {
     @apply text-text-s leading-text-s font-medium;
   }
 }
+
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hidden {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
