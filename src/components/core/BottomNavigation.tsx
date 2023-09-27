@@ -1,7 +1,7 @@
 import { FaHouse, FaPlus } from 'react-icons/fa6';
 export default function BottomNavigation() {
   return (
-    <nav className='fixed bottom-0 w-screen h-14 bg-light-80 flex justify-around items-center'>
+    <nav className='fixed bottom-0 w-screen h-20 bg-light-80 flex justify-around items-center'>
       <button className='text-primary-100 flex flex-col justify-center items-center gap-1'>
         <FaHouse size={24} />
         <h1 className='regular-xs'>Home</h1>

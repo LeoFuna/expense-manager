@@ -9,7 +9,7 @@
 }
 
 body {
-  @apply bg-light-100
+  @apply bg-light-80;
 }
 
 @layer components {

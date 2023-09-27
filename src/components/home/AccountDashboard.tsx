@@ -35,7 +35,7 @@ export default function AccountDashboard() {
           <h1 className='title-3 text-dark-75'>Transações Recentes</h1>
           <button className='bg-primary-20 text-primary-100 px-4 py-2 rounded-xl'>Ver Todas</button>
         </section>
-        <section className='flex flex-col items-between gap-7 h-[42vh] py-4 overflow-y-scroll scrollbar-hidden'>
+        <section className='flex flex-col items-between gap-7 h-[48vh] py-4 overflow-y-scroll scrollbar-hidden'>
           <div className='flex justify-between'>
             <div className="bg-primary-20 flex items-center justify-center w-12 h-12 rounded-xl text-primary-100">
               <FiTrendingDown size={24} />
