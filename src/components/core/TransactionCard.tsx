@@ -30,13 +30,21 @@ export default function TransactionCard({ title, description, amount, date, icon
       <div className="bg-primary-20 flex items-center justify-center w-12 h-12 rounded-xl text-primary-100">
         {getReactIcon(iconName)}
       </div>
-      <div className='flex flex-col justify-between w-2/4'>
-        <h1 className='regular-l'>{title}</h1>
-        <h3 className='regular-xs text-light-20'>{description}</h3>
+      <div className='flex flex-col justify-between w-5/12'>
+        <h1 className='regular-l'>
+          {title}
+        </h1>
+        <h3 className='regular-xs text-light-20'>
+          {description}
+        </h3>
       </div>
-      <div className='flex flex-col justify-between items-end'>
-        <h1 className={`title-3 ${getPriceColor()}`}>R$ {amount}</h1>
-        <h3 className='regular-xs text-light-20'>{date}</h3>
+      <div className='flex flex-col justify-between items-end w-4/12'>
+        <h1 className={`regular-l ${getPriceColor()}`}>
+          R$ {amount}
+        </h1>
+        <h3 className='regular-xs text-light-20'>
+          {date}
+        </h3>
       </div>
    </div>
   )
