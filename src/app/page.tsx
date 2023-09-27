@@ -7,7 +7,7 @@ export default async function Home() {
   const session = await getServerSession();
 
   return (
-    <main>
+    <main className="overflow-y-hidden h-screen">
       <TopNavigation avatar={session?.user?.image} />
       <AccountDashboard />
       <BottomNavigation />

@@ -4,7 +4,7 @@ import TransactionsBalance from './TransactionsBalance';
 
 export default function AccountDashboard() {
   return (
-    <section className="overflow-hidden px-4 py-4 pb-20 flex flex-col items-center gap-7 w-screen">
+    <section className="overflow-hidden px-4 py-4 flex flex-col items-center gap-7 w-screen">
       <div id='balance-div' className="flex flex-col items-center gap-2">
         <h2 className="regular-s text-light-20">Saldo da Conta</h2>
         <h3 className="title-1 text-dark-75">R$ 1.000,00</h3>
