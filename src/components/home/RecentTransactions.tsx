@@ -1,27 +1,20 @@
+import { getServerSession } from "next-auth";
 import TransactionCard from "../core/TransactionCard";
+import { ITransaction } from "@/interfaces/Transaction";
+import { ITransactionCategory } from "@/interfaces/TransactionCategory";
+import { headers} from "next/headers";
 
-const mockedTransactions = [
-  { title: 'Mercado', amount: -40.32, iconName: 'food' },
-  { title: 'Roupas', amount: -31.02, iconName: 'shopping' },
-  { title: 'Lazer', amount: -20.00, iconName: 'shopping' },
-  { title: 'Salário', amount: 1000.00, iconName: 'income' },
-  { title: 'Freela', amount: 500.00, iconName: 'income' },
-  { title: 'Internet', amount: -129.00, iconName: 'energy' },
-  { title: 'Internet', amount: -129.00, iconName: 'energy' },
-  { title: 'Internet', amount: -129.00, iconName: 'energy' },
-  { title: 'Xablau', amount: -129.00, iconName: 'energy' },
-  { title: 'Mercado', amount: -40.32, iconName: 'food' },
-  { title: 'Roupas', amount: -31.02, iconName: 'shopping' },
-  { title: 'Lazer', amount: -20.00, iconName: 'shopping' },
-  { title: 'Salário', amount: 10000.01, iconName: 'income' },
-  { title: 'Freela', amount: 500.00, iconName: 'income' },
-  { title: 'Internet', amount: -12923.03, iconName: 'energy' },
-  { title: 'Internet', amount: -129.00, iconName: 'energy' },
-  { title: 'Internet', amount: -129.00, iconName: 'energy' },
-  { title: 'Xablau', amount: -129.00, iconName: 'energy' },
-]
+interface ITransactionApi extends ITransaction {
+  category: ITransactionCategory;
+}
 
-export default function RecentTransactions() {
+export default async function RecentTransactions() {
+  const session = await getServerSession();
+  const host = headers().get("host");
+  const protocal = process?.env.NODE_ENV==="development"?"http":"https";
+  const transactions: ITransactionApi[] = await fetch(`${protocal}://${host}/api/transactions/${session?.user?.email}`)
+    .then(response => response.json());
+
   return (
     <div className='flex flex-col w-screen px-4 gap-2'>
       <section className="flex justify-between items-center">
@@ -31,18 +24,18 @@ export default function RecentTransactions() {
         </button>
       </section>
       <section className='flex flex-col items-between gap-7 h-[53vh] py-4 overflow-y-scroll scrollbar-hidden'>
-        {mockedTransactions.map((transaction, index) => 
+        {transactions.map((transaction, index) => 
           <TransactionCard
             key={index}
-            title={transaction.title}
+            title={transaction.category.name}
             description="Dia a dia"
-            amount={transaction.amount}
+            amount={transaction.amountInCents / 100}
             date="10:00"
-            iconName={transaction.iconName}
+            iconName={transaction.category.iconName}
           />
           )}
         {/* Divider to help on scroll and footer interaction   */}
-        <div className="p-6 bg-danger-80" />
+        <div className="p-6" />
       </section>
     </div>
   )

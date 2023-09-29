@@ -5,6 +5,25 @@ import { ITransactionService } from "@/interfaces/services/TransactionService";
 
 export default class TransactionService implements ITransactionService {
   constructor(private readonly transactionRepository: ITransactionRepository) {}
+  async getTransactionBalance(email: string, month: number): Promise<{ totalIncomeInCents: number; totalOutcomeInCents: number; }> {
+    const transactions = await this.index(email);
+    const transactionsFromMonth = transactions.filter(transaction => new Date(transaction.createdAt).getMonth() === month);
+    let totalIncomeInCents = 0;
+    let totalOutcomeInCents = 0;
+
+    transactionsFromMonth.map((transaction) => {
+      if (transaction.amountInCents > 0) {
+        totalIncomeInCents += transaction.amountInCents;
+      } else {
+        totalOutcomeInCents += transaction.amountInCents;
+      }
+    });
+
+    return {
+      totalIncomeInCents,
+      totalOutcomeInCents,
+    };
+  }
   
   async create(email: string, transaction: ITransaction): Promise<ITransaction> {
     const transactionCreated = await this.transactionRepository.create(email, transaction);
@@ -17,5 +36,6 @@ export default class TransactionService implements ITransactionService {
 
     return transactions;
   }
+
 
 }

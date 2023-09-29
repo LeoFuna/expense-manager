@@ -13,11 +13,21 @@ export default class TransactionRepoFirebase implements ITransactionRepository {
       if (transactions.empty) {
         return [];
       }
+      const transactionCategories = await dbAdmin.collection('transactionCategory').get();
+      const categories = transactionCategories.docs.map(docCategory => {
+        return {
+          ...docCategory.data(),
+          id: docCategory.id,
+        }
+      });
+
       return transactions.docs.map(docTransaction => {
         const transaction = docTransaction.data() as ITransaction;
+        const categoryFromTransaction = categories.find(category => category.id === transaction.categoryId);
         return {
           ...transaction,
           id: docTransaction.id,
+          category: categoryFromTransaction
         }
       });
     }

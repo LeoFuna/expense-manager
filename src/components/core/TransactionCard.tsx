@@ -1,3 +1,4 @@
+import { ITransactionCategory } from "@/interfaces/TransactionCategory";
 import { FaShoppingBag, FaUtensils, FaLightbulb, FaImage, FaMoneyBill } from "react-icons/fa";
 
 type TransactionCardProps = {
@@ -5,7 +6,7 @@ type TransactionCardProps = {
   description: string;
   amount: number;
   date: string;
-  iconName?: string;
+  iconName?: ITransactionCategory['iconName'];
 }
 
 const getReactIcon = (iconName?: string) => {
@@ -16,7 +17,7 @@ const getReactIcon = (iconName?: string) => {
       return <FaUtensils size={24} />;
     case 'energy':
       return <FaLightbulb size={24} />;
-    case 'income':
+    case 'salary':
       return <FaMoneyBill size={24} />;
     default:
       return <FaImage size={24} />;
