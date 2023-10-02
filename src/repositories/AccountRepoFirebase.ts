@@ -3,11 +3,19 @@ import { IAccount } from "@/interfaces/Account";
 import IAccountRepository from "@/interfaces/repositories/AccountRepository";
 
 export default class AccountRepoFirebase implements IAccountRepository{
-  async show(email: string): Promise<IAccount | null> {
+  async verifyIfAccountExists(email: string): Promise<boolean> {
+    const account = await dbAdmin.collection('accounts')
+    .doc(email)
+    .get();
+
+    return account.exists;
+  }
+
+  async show(email: string, year: number, month: number): Promise<IAccount | null> {
     const account = await dbAdmin.collection('accounts')
       .doc(email)
-      .collection('2023')
-      .where('monthInNumber', '==', 9)
+      .collection(`${year}`)
+      .where('monthInNumber', '==', month)
       .get();
 
     if (!account.docs.length) {
@@ -17,8 +25,10 @@ export default class AccountRepoFirebase implements IAccountRepository{
 
     return mainAccount.data() as IAccount;
   }
+
   async create(data: IAccount): Promise<IAccount> {
-    await dbAdmin.collection('accounts').doc(data.email).set(data);
+    await dbAdmin.collection('accounts').doc(data.email)
+      .collection(`${new Date().getFullYear()}`).add(data);
 
     return data;
   }
