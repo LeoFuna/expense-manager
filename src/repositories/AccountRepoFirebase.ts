@@ -21,9 +21,9 @@ export default class AccountRepoFirebase implements IAccountRepository{
     if (!account.docs.length) {
       return null;
     }
-    const mainAccount = account.docs[0];
-
-    return mainAccount.data() as IAccount;
+    const monthBudget = account.docs[0];
+    
+    return monthBudget.data() as IAccount;
   }
 
   async create(data: IAccount): Promise<IAccount> {
