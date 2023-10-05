@@ -14,12 +14,15 @@ export default class AccountController implements IAccountController {
     return NextResponse.json(serviceResponse, { status: 201 });
   }
 
-  async show(req: NextRequest, { params }: { params: { email: string, year: string | null, month: string | null } }): Promise<NextResponse<IAccount | null>> {
-    const { email, year, month } = params;
-    if (!year || !month) {
+  async show(req: NextRequest, { params }: { params: { email: string } }): Promise<NextResponse<{balance: number} | null>> {
+    const { searchParams } = new URL(req.url);
+    const month = searchParams.get('month');
+    const fullYear = searchParams.get('fullYear');
+    const { email } = params;
+    if (!fullYear || !month) {
       return NextResponse.json(null, { status: 400 });
     }
-    const serviceResponse = await this.accountService.show(email, Number(year), Number(month));
+    const serviceResponse = await this.accountService.show(email, Number(fullYear), Number(month));
 
     return NextResponse.json(serviceResponse, { status: 200 });
   }  
