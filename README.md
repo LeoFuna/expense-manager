@@ -48,7 +48,7 @@
   - `GET /transactions/{email}?fullYear=2023&month=0`
   - Query: `{ fullYear, month }`
   - Response: `Transaction[]`
-- Ver o saldo de entradas e saídas de um determinado mês/ano
+- Ver o saldo de entradas e saídas de um determinado mês/ano [x]
   - `GET /transactions/{email}/balance?fullYear=2023&month=0`
   - Query: `{ fullYear, month }`
   - Response: `{ incomeBalance, outcomeBalance }`
