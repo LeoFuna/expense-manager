@@ -16,9 +16,12 @@ export default class AccountService implements IAccountService {
     return data;
   }
 
-  async show(email: string, year: number, month: number): Promise<IAccount | null> {
+  async show(email: string, year: number, month: number): Promise<{ balance: number } | null> {
     const repoResponse = await this.accountRepo.show(email, year, month);
+    if (!repoResponse) {
+      return null;
+    }
 
-    return repoResponse;
+    return { balance: repoResponse.balanceInCents / 100 };
   }
 }
