@@ -4,11 +4,11 @@ import IAccountRepository from "@/interfaces/repositories/AccountRepository";
 
 export default class AccountRepoFirebase implements IAccountRepository{
   async verifyIfAccountExists(email: string): Promise<boolean> {
-    const account = await dbAdmin.collection('accounts')
+    const accounts = await dbAdmin.collection('accounts')
     .doc(email)
-    .get();
+    .listCollections()
 
-    return account.exists;
+    return !!accounts.length;
   }
 
   async show(email: string, year: number, month: number): Promise<IAccount | null> {
