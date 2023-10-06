@@ -1,8 +1,10 @@
 'use client'
+import { useDateNavigation } from "@/hooks/date";
 import Image from "next/image";
 import { FaBell, FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 
 export default function TopNavigation({ avatar }: { avatar?: string | null }) {
+  const { currentMonthInBr, currentYear, changeMonth } = useDateNavigation();
   return (
     <header className="flex items-center justify-between w-screen h-14 py-8 px-4">
       <Image
@@ -12,12 +14,14 @@ export default function TopNavigation({ avatar }: { avatar?: string | null }) {
         width={44}
         height={44}
       />
-      <nav className="flex items-center gap-3">
-        <button className="text-primary-100">
+      <nav className="flex items-center justify-center gap-3 min-w-[50%]">
+        <button className="text-primary-100" onClick={() => changeMonth('prev')}>
           <FaChevronLeft size={16} />
         </button>
-        <h2 className="regular-s text-dark-75">Setembro</h2>
-        <button className="text-primary-100">
+        <h2 className="regular-s text-dark-75 text-center min-w-[70%]">
+          {currentMonthInBr} / {String(currentYear).slice(2)}
+        </h2>
+        <button className="text-primary-100" onClick={() => changeMonth('next')}>
           <FaChevronRight size={16} />
         </button>
       </nav>
