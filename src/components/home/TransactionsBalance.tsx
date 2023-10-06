@@ -1,8 +1,8 @@
 import { IconType } from "react-icons";
+import TransactionTotalBalance from "./TransactionTotalAmount";
 
 type TransactionsBalanceProps = {
   title: string;
-  totalAmount: number;
   Icon: IconType;
   color: 'red' | 'green' | 'yellow';
 }
@@ -20,7 +20,7 @@ const getComponentColor = (color: TransactionsBalanceProps['color']) => {
   }
 }
 
-export default async function TransactionsBalance({ title, totalAmount, Icon, color }: TransactionsBalanceProps) {
+export default function TransactionsBalance({ title, Icon, color }: TransactionsBalanceProps) {
   return (
     <div className={`flex items-center ${getComponentColor(color)} w-2/4 p-4 rounded-3xl gap-2`}>
       <div className={`bg-light-100 flex items-center w-12 h-12 p-2 rounded-xl`}>
@@ -28,7 +28,7 @@ export default async function TransactionsBalance({ title, totalAmount, Icon, co
       </div>
       <div className='text-light-100 flex flex-col items-start gap-2 w-3/4'>
         <h4 className='regular-s'>{title}</h4>
-        <p className='title-2 text-sm'>R$ {totalAmount}</p>
+        <TransactionTotalBalance type={ color === 'green' ? 'totalIncomeInCents' : 'totalOutcomeInCents' } />
       </div>
     </div>
   )

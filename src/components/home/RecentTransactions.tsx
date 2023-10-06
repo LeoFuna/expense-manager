@@ -12,7 +12,7 @@ export default async function RecentTransactions() {
   const session = await getServerSession();
   const host = headers().get("host");
   const protocal = process?.env.NODE_ENV==="development"?"http":"https";
-  const transactions: ITransactionApi[] = await fetch(`${protocal}://${host}/api/transactions/${session?.user?.email}`)
+  const transactions: ITransactionApi[] = await fetch(`${protocal}://${host}/api/transactions/${session?.user?.email}?month=8&fullYear=2023`)
     .then(response => response.json());
 
   return (

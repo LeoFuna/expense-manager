@@ -13,6 +13,7 @@ export default class TransactionService implements ITransactionService {
       monthInNumber: new Date(transactionData.createdAt).getMonth(),
     }
     const transactionCreated = await this.transactionRepository.create(email, transaction);
+    // TO DO: lembrar que ao criar transaçao, deve-se atualizar o saldo da conta
 
     return transactionCreated;
   }
