@@ -13,7 +13,7 @@ export default function TransactionTotalBalance({ type, email }: { type: 'totalI
       month: String(dateContext.date.getMonth())
     });
 
-    fetch(`api/transactions/${email}/balance?${urlParams}`, { cache: 'no-cache' })
+    fetch(`api/transactions/${email}/balance?${urlParams}`)
       .then(res => res.json())
       .then(data => setTotalAmount(data[type] / 100))
   }, [dateContext.date])
