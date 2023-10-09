@@ -20,9 +20,9 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body className={inter.className}>
-        <ClientSessionProvider session={session}>
+        {/* <ClientSessionProvider session={session}> */}
           {children}
-        </ClientSessionProvider>
+        {/* </ClientSessionProvider> */}
       </body>
     </html>
   )
