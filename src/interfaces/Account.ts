@@ -4,3 +4,7 @@ export interface IAccount {
   balanceInCents: number;
   monthInNumber: number;
 }
+
+export interface IAccountApi extends IAccount {
+  id: string;
+}

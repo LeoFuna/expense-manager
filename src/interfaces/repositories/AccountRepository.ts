@@ -1,7 +1,8 @@
-import { IAccount } from "../Account";
+import { IAccount, IAccountApi } from "../Account";
 
 export default interface IAccountRepository {
-  show(email: string, year: number, month: number): Promise<IAccount | null>;
+  show(email: string, year: number, month: number): Promise<IAccountApi | null>;
   create(data: IAccount): Promise<IAccount>;
+  update(email: string, data: {id: string, balanceInCents: number}, year: number): Promise<{id: string}>;
   verifyIfAccountExists(email: string): Promise<boolean>;
 }

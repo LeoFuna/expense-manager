@@ -1,8 +1,17 @@
 import { dbAdmin } from "@/db/firebase-admin";
-import { IAccount } from "@/interfaces/Account";
+import { IAccount, IAccountApi } from "@/interfaces/Account";
 import IAccountRepository from "@/interfaces/repositories/AccountRepository";
 
 export default class AccountRepoFirebase implements IAccountRepository{
+  async update(email: string, data: IAccountApi, year: number): Promise<{ id: string }> {
+    await dbAdmin.collection('accounts')
+      .doc(email)
+      .collection(`${year}`)
+      .doc(data.id)
+      .update({ balanceInCents: data.balanceInCents });
+
+    return { id: data.id };
+  }
   async verifyIfAccountExists(email: string): Promise<boolean> {
     const accounts = await dbAdmin.collection('accounts')
     .doc(email)
@@ -11,7 +20,7 @@ export default class AccountRepoFirebase implements IAccountRepository{
     return !!accounts.length;
   }
 
-  async show(email: string, year: number, month: number): Promise<IAccount | null> {
+  async show(email: string, year: number, month: number): Promise<IAccountApi | null> {
     const account = await dbAdmin.collection('accounts')
       .doc(email)
       .collection(`${year}`)
@@ -22,8 +31,8 @@ export default class AccountRepoFirebase implements IAccountRepository{
       return null;
     }
     const monthBudget = account.docs[0];
-    
-    return monthBudget.data() as IAccount;
+
+    return { id: monthBudget.id, ...monthBudget.data() } as IAccountApi;
   }
 
   async create(data: IAccount): Promise<IAccount> {
