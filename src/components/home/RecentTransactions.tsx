@@ -2,15 +2,15 @@
 import TransactionCard from "../core/TransactionCard";
 import { ITransaction } from "@/interfaces/Transaction";
 import { ITransactionCategory } from "@/interfaces/TransactionCategory";
-import { useContext, useEffect, useState } from "react";
-import { DateContext } from "@/contexts/dateContext";
+import { useEffect, useState } from "react";
+import { useDateContext } from "@/contexts/dateContext";
 
 interface ITransactionApi extends ITransaction {
   category: ITransactionCategory;
 }
 
 export default function RecentTransactions({ email }: { email: string }) {
-  const dateContext = useContext(DateContext);
+  const dateContext = useDateContext();
   const [transactions, setTransactions] = useState<ITransactionApi[]>([]);
 
   useEffect(() => {

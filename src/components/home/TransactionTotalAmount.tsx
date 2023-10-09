@@ -1,11 +1,11 @@
 'use client'
 
-import { DateContext } from "@/contexts/dateContext"
+import { useDateContext } from "@/contexts/dateContext"
 import { useSession } from "next-auth/react";
-import { useContext, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 
 export default function TransactionTotalBalance({ type }: { type: 'totalIncomeInCents' | 'totalOutcomeInCents' }) {
-  const dateContext = useContext(DateContext);
+  const dateContext = useDateContext();
   const [totalAmount, setTotalAmount] = useState(0);
   const { data } = useSession();
 

@@ -1,5 +1,5 @@
 'use client'
-import { createContext, useState } from "react";
+import { createContext, useContext, useState } from "react";
 
 export const DateContext = createContext({
   date: new Date(),
@@ -20,3 +20,5 @@ export function DateContextProvider({ children }: { children: React.ReactNode })
     </DateContext.Provider>
   );
 }
+
+export const useDateContext = () => useContext(DateContext);
