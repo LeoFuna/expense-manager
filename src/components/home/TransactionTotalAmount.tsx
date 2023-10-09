@@ -1,13 +1,11 @@
 'use client'
 
 import { useDateContext } from "@/contexts/dateContext"
-import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react"
 
-export default function TransactionTotalBalance({ type }: { type: 'totalIncomeInCents' | 'totalOutcomeInCents' }) {
+export default function TransactionTotalBalance({ type, email }: { type: 'totalIncomeInCents' | 'totalOutcomeInCents', email: string }) {
   const dateContext = useDateContext();
   const [totalAmount, setTotalAmount] = useState(0);
-  const { data } = useSession();
 
   useEffect(() => {
     const urlParams = new URLSearchParams({
@@ -15,7 +13,7 @@ export default function TransactionTotalBalance({ type }: { type: 'totalIncomeIn
       month: String(dateContext.date.getMonth())
     });
 
-    fetch(`api/transactions/${data?.user?.email}/balance?${urlParams}`, { cache: 'no-cache' })
+    fetch(`api/transactions/${email}/balance?${urlParams}`, { cache: 'no-cache' })
       .then(res => res.json())
       .then(data => setTotalAmount(data[type] / 100))
   }, [dateContext.date])
