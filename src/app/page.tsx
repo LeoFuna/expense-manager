@@ -12,7 +12,7 @@ export default async function Home() {
       <DateContextProvider>
         <>
           <TopNavigation avatar={session?.user?.image} />
-          <AccountDashboard />
+          <AccountDashboard email={session?.user?.email || ''} />
           <BottomNavigation />
         </>
       </DateContextProvider>
