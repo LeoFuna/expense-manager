@@ -3,6 +3,7 @@ import TopNavigation from "@/components/core/TopNavigation";
 import AccountDashboard from "@/components/home/AccountDashboard";
 import { DateContextProvider } from "@/contexts/dateContext";
 import { getServerSession } from "next-auth"
+export const dynamic = "force-dynamic";
 
 export default async function Home() {
   const session = await getServerSession();
