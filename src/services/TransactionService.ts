@@ -1,19 +1,31 @@
+import { IAccount } from "@/interfaces/Account";
 import { ITransaction } from "@/interfaces/Transaction";
 import { ITransactionRepository } from "@/interfaces/repositories/TransactionRepository";
+import { IAccountService } from "@/interfaces/services/AccountService";
 import { ITransactionService, TransactionToCreate } from "@/interfaces/services/TransactionService";
 
 
 export default class TransactionService implements ITransactionService {
-  constructor(private readonly transactionRepository: ITransactionRepository) {}
+  constructor(
+    private readonly transactionRepository: ITransactionRepository,
+    private readonly accountService: IAccountService,
+  ) {}
 
   async create(email: string, transactionData: TransactionToCreate): Promise<{ id: string }> {
+    const createdAtDate = new Date(transactionData.createdAt);
     const transaction: ITransaction = {
       ...transactionData,
       operationType: transactionData.amountInCents > 0 ? "income" : "outcome",
-      monthInNumber: new Date(transactionData.createdAt).getMonth(),
+      monthInNumber: createdAtDate.getMonth(),
     }
     const transactionCreated = await this.transactionRepository.create(email, transaction);
-    // TO DO: lembrar que ao criar transaçao, deve-se atualizar o saldo da conta
+    const dataToUpdate = { balanceInCents: transactionData.amountInCents } as IAccount;
+    await this.accountService.update(
+      email,
+      dataToUpdate,
+      createdAtDate.getFullYear(),
+      createdAtDate.getMonth()
+    );
 
     return transactionCreated;
   }

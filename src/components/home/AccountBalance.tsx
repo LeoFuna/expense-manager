@@ -1,10 +1,10 @@
 'use client'
 
-import { DateContext } from "@/contexts/dateContext";
-import { useContext, useEffect, useState } from "react";
+import { useDateContext } from "@/contexts/dateContext";
+import { useEffect, useState } from "react";
 
 export default function AccountBalance({ email }: { email: string }) {
-  const dateContext = useContext(DateContext);
+  const dateContext = useDateContext();
   const [accountBalance, setAccountBalance] = useState(0);
 
   useEffect(() => {
@@ -14,7 +14,7 @@ export default function AccountBalance({ email }: { email: string }) {
     })
     fetch(`/api/accounts/${email}/monthBudget?${urlParams}`)
     .then(response => response.json())
-    .then(data => setAccountBalance(data?.balance ? (data.balance / 100) : 0))
+    .then(data => setAccountBalance(data?.balance ? data.balance : 0))
   }, [dateContext.date])
 
   return (

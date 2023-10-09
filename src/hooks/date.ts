@@ -1,6 +1,6 @@
-import { DateContext } from "@/contexts/dateContext";
+import { useDateContext } from "@/contexts/dateContext";
 import { addMonths } from "date-fns";
-import { useContext, useState } from "react";
+import { useState } from "react";
 
 const BRAZIL_MONTHS = [
   'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho',
@@ -9,7 +9,7 @@ const BRAZIL_MONTHS = [
 
 
 function useDateNavigation() {
-  const dateContext = useContext(DateContext);
+  const dateContext = useDateContext();
   const [date, setDate] = useState(new Date());
   const currentMonthInBr = BRAZIL_MONTHS[date.getMonth()];
   const currentYear = date.getFullYear();
