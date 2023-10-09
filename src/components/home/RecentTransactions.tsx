@@ -1,19 +1,27 @@
-import { getServerSession } from "next-auth";
+'use client'
 import TransactionCard from "../core/TransactionCard";
 import { ITransaction } from "@/interfaces/Transaction";
 import { ITransactionCategory } from "@/interfaces/TransactionCategory";
-import { headers} from "next/headers";
+import { useContext, useEffect, useState } from "react";
+import { DateContext } from "@/contexts/dateContext";
 
 interface ITransactionApi extends ITransaction {
   category: ITransactionCategory;
 }
 
-export default async function RecentTransactions() {
-  const session = await getServerSession();
-  const host = headers().get("host");
-  const protocal = process?.env.NODE_ENV==="development"?"http":"https";
-  const transactions: ITransactionApi[] = await fetch(`${protocal}://${host}/api/transactions/${session?.user?.email}?month=8&fullYear=2023`)
-    .then(response => response.json());
+export default function RecentTransactions({ email }: { email: string }) {
+  const dateContext = useContext(DateContext);
+  const [transactions, setTransactions] = useState<ITransactionApi[]>([]);
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams({
+      fullYear: String(dateContext.date.getFullYear()),
+      month: String(dateContext.date.getMonth())
+    })
+    fetch(`/api/transactions/${email}?${urlParams}`)
+    .then(response => response.json())
+    .then(data => setTransactions(data))
+  }, [dateContext.date])
 
   return (
     <div className='flex flex-col w-screen px-4 gap-2'>

@@ -28,7 +28,9 @@ export default async function AccountDashboard() {
         />
       </div>
 
-      <RecentTransactions />
+      <RecentTransactions
+        email={session?.user?.email || ''}
+      />
     </section>
   )
 }
