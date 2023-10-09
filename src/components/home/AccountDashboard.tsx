@@ -1,3 +1,4 @@
+'use client'
 import { FiTrendingDown, FiTrendingUp } from 'react-icons/fi';
 import RecentTransactions from './RecentTransactions';
 import TransactionsBalance from './TransactionsBalance';
