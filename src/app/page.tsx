@@ -1,18 +1,19 @@
+'use client'
 import BottomNavigation from "@/components/core/BottomNavigation";
 import TopNavigation from "@/components/core/TopNavigation";
 import AccountDashboard from "@/components/home/AccountDashboard";
 import { DateContextProvider } from "@/contexts/dateContext";
-import { getServerSession } from "next-auth"
+import { useSession } from "next-auth/react";
 
-export default async function Home() {
-  const session = await getServerSession();
+export default function Home() {
+  const { data } = useSession();
 
   return (
     <main className="overflow-y-hidden h-screen">
       <DateContextProvider>
         <>
-          <TopNavigation avatar={session?.user?.image} />
-          <AccountDashboard email={session?.user?.email || ''} />
+          <TopNavigation avatar={data?.user?.image} />
+          <AccountDashboard email={data?.user?.email || ''} />
           <BottomNavigation />
         </>
       </DateContextProvider>
