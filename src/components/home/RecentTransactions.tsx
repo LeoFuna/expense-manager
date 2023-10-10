@@ -4,6 +4,7 @@ import { ITransaction } from "@/interfaces/Transaction";
 import { ITransactionCategory } from "@/interfaces/TransactionCategory";
 import { useEffect, useState } from "react";
 import { useDateContext } from "@/contexts/dateContext";
+import { getFullTime } from "@/utils/date.utils";
 
 interface ITransactionApi extends ITransaction {
   category: ITransactionCategory;
@@ -36,9 +37,9 @@ export default function RecentTransactions({ email }: { email: string }) {
           <TransactionCard
             key={index}
             title={transaction.category.name}
-            description="Dia a dia"
+            description={transaction.description || ''}
             amount={transaction.amountInCents / 100}
-            date="10:00"
+            date={getFullTime(new Date(transaction.createdAt))}
             iconName={transaction.category.iconName}
           />
           )}
