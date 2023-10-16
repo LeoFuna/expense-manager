@@ -67,3 +67,8 @@
   - `DELETE /budgets/{email}?id=myFakeId`
   - Query: `{ id }`
   - Response: `{ id }`
+
+
+## Próximos Passos
+- Permitir a criaçao de uma transação diretamente no sistema
+- Pensar em cancelar o sinal de uma request ao chamar ela varias vezes, pegando somente o ultimo!
