@@ -1,9 +1,13 @@
-export function Spinner() {
+export function Spinner({ className }: { className?: string }) {
   return (
     <div role="status" className="flex gap-2 justify-center items-center">
       <svg
         aria-hidden="true"
-        className="w-8 h-8 mr-2 text-primary-100 animate-spin dark:text-gray-600 fill-primary-40"
+        className={`
+          w-8 h-8 mr-2 text-primary-100 animate-spin
+          dark:text-gray-600 fill-primary-40
+          ${ className }`
+        }
         viewBox="0 0 100 101"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"

@@ -2,7 +2,6 @@
 import TransactionCard from "../core/TransactionCard";
 import { ITransaction } from "@/interfaces/Transaction";
 import { ITransactionCategory } from "@/interfaces/TransactionCategory";
-import { useState } from "react";
 import { useDateContext } from "@/contexts/dateContext";
 import { getFullTime } from "@/utils/date.utils";
 import { useFetch } from "@/hooks/fetch";
@@ -13,11 +12,9 @@ interface ITransactionApi extends ITransaction {
 
 export default function RecentTransactions({ email }: { email: string }) {
   const dateContext = useDateContext();
-  const [transactions, setTransactions] = useState<ITransactionApi[]>([]);
 
-  useFetch({
+  const { data: transactions } = useFetch({
     url: `/api/transactions/${email}`,
-    onSuccess: setTransactions,
     dependencies: [dateContext.date],
     params: {
       fullYear: String(dateContext.date.getFullYear()),
@@ -34,7 +31,7 @@ export default function RecentTransactions({ email }: { email: string }) {
         </button>
       </section>
       <section className='flex flex-col items-between gap-7 h-[53vh] py-4 overflow-y-scroll scrollbar-hidden'>
-        {transactions.map((transaction, index) => 
+        {transactions?.map((transaction: ITransactionApi, index: number) => 
           <TransactionCard
             key={index}
             title={transaction.category.name}
