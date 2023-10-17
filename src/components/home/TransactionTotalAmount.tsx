@@ -2,15 +2,13 @@
 
 import { useDateContext } from "@/contexts/dateContext"
 import { useFetch } from "@/hooks/fetch";
-import { useState } from "react"
+import { Spinner } from "../core/Spinner";
 
 export default function TransactionTotalBalance({ type, email }: { type: 'totalIncomeInCents' | 'totalOutcomeInCents', email: string }) {
   const dateContext = useDateContext();
-  const [totalAmount, setTotalAmount] = useState(0);
 
-  useFetch({
+  const { data: totalAmountInCents, isValidating } = useFetch({
     url: `api/transactions/${email}/balance`,
-    onSuccess: (data) => setTotalAmount(data[type] / 100),
     dependencies: [dateContext.date],
     params: {
       fullYear: String(dateContext.date.getFullYear()),
@@ -18,7 +16,11 @@ export default function TransactionTotalBalance({ type, email }: { type: 'totalI
     }
   })
 
+  const spinnerColor = type === 'totalIncomeInCents' ? 'text-success-60' : 'text-danger-60';
+  if (isValidating) return <Spinner className={spinnerColor} />;
   return (
-    <p className='title-2 text-sm'>R$ {totalAmount}</p>
+    <p className='title-2 text-sm'>
+      R$ {totalAmountInCents ? totalAmountInCents[type] / 100 : 0}
+    </p>
   )
 }

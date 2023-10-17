@@ -71,4 +71,3 @@
 
 ## Próximos Passos
 - Permitir a criaçao de uma transação diretamente no sistema
-- Pensar em cancelar o sinal de uma request ao chamar ela varias vezes, pegando somente o ultimo!
