@@ -8,7 +8,7 @@ export default async function Home() {
   const session = await getServerSession();
 
   return (
-    <main className="overflow-y-hidden h-screen">
+    <main className="flex flex-col items-center overflow-y-hidden h-screen">
       <DateContextProvider>
         <>
           <TopNavigation avatar={session?.user?.image} />
