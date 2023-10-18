@@ -8,7 +8,7 @@ export default async function AccountDashboard() {
   const session = await getServerSession();
 
   return (
-    <section className="overflow-hidden px-4 py-4 flex flex-col items-center gap-7 w-screen">
+    <section className="overflow-hidden max-w-md px-4 py-4 flex flex-col items-center gap-7 w-screen">
       <div id='balance-div' className="flex flex-col items-center gap-2">
         <h2 className="regular-s text-light-20">Saldo da Conta</h2>
         <AccountBalance email={session?.user?.email || ''} />

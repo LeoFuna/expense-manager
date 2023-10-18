@@ -23,7 +23,7 @@ export default function RecentTransactions({ email }: { email: string }) {
   })
 
   return (
-    <div className='flex flex-col w-screen px-4 gap-2'>
+    <div className='flex flex-col w-full px-4 gap-2'>
       <section className="flex justify-between items-center">
         <h1 className='title-3 text-dark-75'>Transações Recentes</h1>
         <button className='bg-primary-20 text-primary-100 px-4 py-2 rounded-xl'>

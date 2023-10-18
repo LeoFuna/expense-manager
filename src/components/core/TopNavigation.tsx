@@ -6,7 +6,7 @@ import { FaBell, FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 export default function TopNavigation({ avatar }: { avatar?: string | null }) {
   const { currentMonthInBr, currentYear, changeMonth } = useDateNavigation();
   return (
-    <header className="flex items-center justify-between w-screen h-14 py-8 px-4">
+    <header className="flex items-center justify-between w-screen max-w-md h-14 py-8 px-4">
       <Image
         className="rounded-full border p-[2px] border-primary-100"
         src={avatar || 'Deve vir imagem default'}
