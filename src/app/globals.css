@@ -12,6 +12,16 @@ body {
   @apply bg-light-80;
 }
 
+@layer base {
+  input[type='number']::-webkit-outer-spin-button,
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number'] {
+    -webkit-appearance: none;
+    margin: 0;
+    -moz-appearance: textfield !important;
+  }
+}
+
 @layer components {
   .title-x {
     @apply text-title-x leading-title-x font-bold;
