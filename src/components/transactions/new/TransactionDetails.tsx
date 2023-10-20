@@ -1,3 +1,5 @@
+import { Button } from "@/components/core/Button";
+
 /*
   - Categoria: Terao os itens de transactionCategory
     lembrando de considerar o operationType para listar somente os tipos certos
@@ -9,8 +11,21 @@
 */
 export default function TransactionDetails() {
   return (
-    <div className="absolute h-[65%] rounded-t-3xl w-full bottom-0 left-0 right-0 bg-light-100">
-
+    <div className="absolute flex flex-col p-4 py-9 h-[65%] rounded-t-3xl w-full bottom-0 left-0 right-0 bg-light-100">
+      <div className="flex flex-col gap-4 h-4/5">
+        <select className="bg-light-100 text-light-20 border-light-40 border p-4 rounded-xl" name="category" id="category">
+          <option value="0">Categoria</option>
+          <option value="comida">Ifood</option>
+        </select>
+        <input
+          className="text-light-20 border-light-40 border p-3 rounded-xl"
+          type="text"
+          name="description"
+          id="description"
+          placeholder="Descrição"
+        />
+      </div>
+      <Button>Salvar</Button>
     </div>
   )
 }
