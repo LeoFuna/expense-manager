@@ -1,8 +1,10 @@
 'use client'
 
-export default function TransactionAmountInput({ type }: { type: 'income' | 'outcome' }) {
-  const getBgColor = (type: string) => {
-    if (type === 'income') return 'bg-success-100';
+import { ITransactionCategory } from "@/interfaces/TransactionCategory";
+
+export default function TransactionAmountInput({ operationType }: Pick<ITransactionCategory, 'operationType'>) {
+  const getBgColor = ({ operationType }: Pick<ITransactionCategory, 'operationType'>) => {
+    if (operationType === 'income') return 'bg-success-100';
     return 'bg-danger-100';
   }
 
@@ -10,7 +12,7 @@ export default function TransactionAmountInput({ type }: { type: 'income' | 'out
     <input
       className={`text-light-100 title-x text-[50px]
         focus:outline-none placeholder:text-light-100
-        w-full ${getBgColor(type)}
+        w-full ${getBgColor({ operationType })}
       `}
       type="number"
       placeholder="0"
