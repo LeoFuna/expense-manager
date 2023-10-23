@@ -1,8 +1,10 @@
 import { dbAdmin } from "@/db/firebase-admin";
 import { ITransaction } from "@/interfaces/Transaction";
+import { ITransactionCategoryRepo } from "@/interfaces/repositories/TransactionCategoryRepository";
 import { ITransactionRepository } from "@/interfaces/repositories/TransactionRepository";
 
 export default class TransactionRepoFirebase implements ITransactionRepository {
+    constructor(private transactionCategoryRepoFirebase: ITransactionCategoryRepo) {}
     async create(email: string, data: ITransaction): Promise<{ id: string }> {
       const year = new Date(data.createdAt).getFullYear();
       const transaction = await dbAdmin.collection('transactions')
@@ -21,13 +23,8 @@ export default class TransactionRepoFirebase implements ITransactionRepository {
       if (transactions.empty) {
         return [];
       }
-      const transactionCategories = await dbAdmin.collection('transactionCategory').get();
-      const categories = transactionCategories.docs.map(docCategory => {
-        return {
-          ...docCategory.data(),
-          id: docCategory.id,
-        }
-      });
+
+      const categories = await this.transactionCategoryRepoFirebase.index();
 
       return transactions.docs.map(docTransaction => {
         const transaction = docTransaction.data() as ITransaction;
