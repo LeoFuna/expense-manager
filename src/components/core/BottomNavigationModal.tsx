@@ -32,10 +32,10 @@ export default function BottomNavigationModal() {
 
   return (
     <div className='flex gap-20 justify-center items-end fixed bottom-20 z-50 bg-light-20 bg-opacity-20 h-screen w-screen max-w-md'>
-      <ModalButton onClick={() => router.push('/transactions/new?type=income')}>
+      <ModalButton onClick={() => router.push('/transactions/new?operationType=income')}>
         <FiTrendingUp size={24} />
       </ModalButton>
-      <ModalButton onClick={() => router.push('/transactions/new?type=outcome')}  className="bg-danger-100" >
+      <ModalButton onClick={() => router.push('/transactions/new?operationType=outcome')}  className="bg-danger-100" >
         <FiTrendingDown size={24} />
       </ModalButton>
     </div>
