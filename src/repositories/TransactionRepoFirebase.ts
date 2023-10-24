@@ -15,11 +15,14 @@ export default class TransactionRepoFirebase implements ITransactionRepository {
       return { id: transaction.id };
     }
 
-    async index(email: string, { month, year }: { month: number; year: number }) {
+    async index(email: string, { month, year, limit = 100 }: { month: number; year: number, limit?: number }) {
       const transactions = await dbAdmin.collection('transactions')
         .doc(email)
         .collection(String(year))
-        .where('monthInNumber', '==', month).get();
+        .where('monthInNumber', '==', month)
+        .orderBy('createdAt', 'desc')
+        .limit(limit)
+        .get();
       if (transactions.empty) {
         return [];
       }
