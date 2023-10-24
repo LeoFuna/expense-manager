@@ -1,8 +1,17 @@
 'use client'
 
 import { ITransactionCategory } from "@/interfaces/TransactionCategory";
+import { FieldValues, UseFormRegister } from "react-hook-form";
 
-export default function TransactionAmountInput({ operationType }: Pick<ITransactionCategory, 'operationType'>) {
+type TransactionAmountInputProps = {
+  operationType: ITransactionCategory['operationType'];
+  register: UseFormRegister<FieldValues>;
+}
+
+export default function TransactionAmountInput({
+  operationType,
+  register,
+}: TransactionAmountInputProps) {
   const getBgColor = ({ operationType }: Pick<ITransactionCategory, 'operationType'>) => {
     if (operationType === 'income') return 'bg-success-100';
     return 'bg-danger-100';
@@ -17,6 +26,7 @@ export default function TransactionAmountInput({ operationType }: Pick<ITransact
       type="number"
       placeholder="0"
       id="transaction-value"
+      {...register('amount')}
     />
   )
 }

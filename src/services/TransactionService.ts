@@ -30,8 +30,8 @@ export default class TransactionService implements ITransactionService {
     return transactionCreated;
   }
 
-  async index(email: string, month: number, year: number): Promise<ITransaction[]> {
-    const transactions = await this.transactionRepository.index(email, { month, year });
+  async index(email: string, month: number, year: number, limit?: number): Promise<ITransaction[]> {
+    const transactions = await this.transactionRepository.index(email, { month, year, limit });
 
     return transactions;
   }

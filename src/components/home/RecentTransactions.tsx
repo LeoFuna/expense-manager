@@ -18,7 +18,8 @@ export default function RecentTransactions({ email }: { email: string }) {
     dependencies: [dateContext.date],
     params: {
       fullYear: String(dateContext.date.getFullYear()),
-      month: String(dateContext.date.getMonth())
+      month: String(dateContext.date.getMonth()),
+      limit: 10,
     }
   })
 

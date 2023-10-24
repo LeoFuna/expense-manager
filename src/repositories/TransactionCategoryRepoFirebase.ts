@@ -3,10 +3,16 @@ import { ITransactionCategory } from "@/interfaces/TransactionCategory";
 import { ITransactionCategoryRepo } from "@/interfaces/repositories/TransactionCategoryRepository";
 
 export default class TransactionCategoryRepoFirebase implements ITransactionCategoryRepo {
-  async index(operationType: ITransactionCategory['operationType']): Promise<ITransactionCategory[]> {
-    const transactionCategories = await dbAdmin.collection('transactionCategory')
-      .where('operationType', '==', operationType)
-      .get();
+  async index(operationType?: ITransactionCategory['operationType']): Promise<ITransactionCategory[]> {
+    let transactionCategories
+    if (!operationType) {
+      transactionCategories = await dbAdmin.collection('transactionCategory')
+        .get();
+    } else {
+      transactionCategories = await dbAdmin.collection('transactionCategory')
+        .where('operationType', '==', operationType)
+        .get();
+    }
     const categories = transactionCategories.docs.map(docCategory => {
       return {
         ...docCategory.data() as ITransactionCategory,

@@ -17,11 +17,13 @@ export default class TransactionController implements ITransactionController {
     const { searchParams } = new URL(request.url);
     const month = searchParams.get('month');
     const fullYear = searchParams.get('fullYear');
+    const limit = searchParams.get('limit');
 
     const transactions = await this.transactionService.index(
       params.email,
       Number(month),
-      Number(fullYear)
+      Number(fullYear),
+      limit ? Number(limit) : undefined
     );
     
     return NextResponse.json(transactions, { status: 200 })

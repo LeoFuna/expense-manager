@@ -15,3 +15,11 @@ export function getFullTime(date = new Date()) {
     padTo2Digits(date.getUTCSeconds()),
   ].join(':');
 }
+
+export function getLocaleISOString() {
+  const currentDate = new Date();
+  const tzoneOffsetInMiliseconds = currentDate.getTimezoneOffset() * 60 * 1000;
+  const tLocal = currentDate.getTime() - tzoneOffsetInMiliseconds;
+  
+  return new Date(tLocal).toISOString();
+}

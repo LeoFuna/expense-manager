@@ -1,8 +1,8 @@
 import Navigation from "@/components/transactions/new/Navigation";
-import TransactionAmount from "@/components/transactions/new/TransactionAmount";
-import TransactionDetails from "@/components/transactions/new/TransactionDetails";
+import TransactionForm from "@/components/transactions/new/TransactionForm";
 import { DateContextProvider } from "@/contexts/dateContext";
 import { ITransactionCategory } from "@/interfaces/TransactionCategory";
+import { getServerSession } from "next-auth";
 
 const getBgColor = (type: string) => {
   if (type === 'income') return 'bg-success-100';
@@ -13,8 +13,10 @@ const getNavTitle = (type: string) => {
   return 'Nova Saída';
 }
 
-export default function NewTransaction({ searchParams }: { searchParams: Pick<ITransactionCategory, 'operationType'> }) {  
-
+export default async function NewTransaction({
+  searchParams
+}: { searchParams: Pick<ITransactionCategory, 'operationType'> }) {  
+  const session = await getServerSession();
   return (
     <main className="flex flex-col items-center h-screen">
       <DateContextProvider>
@@ -26,8 +28,10 @@ export default function NewTransaction({ searchParams }: { searchParams: Pick<IT
           `}
         >
           <Navigation title={getNavTitle(searchParams.operationType)} />
-          <TransactionAmount operationType={searchParams.operationType} />
-          <TransactionDetails operationType={searchParams.operationType} />
+          <TransactionForm
+            urlParams={searchParams}
+            email={session?.user?.email}
+          />
         </div>
       </DateContextProvider>
     </main>
