@@ -40,7 +40,7 @@ export default function TransactionForm({
   
   const createTransaction = (formData: any) => {
     const isIncome = urlParams.operationType === 'income';
-    const amounInCents = Number(formData.amount) * 100;
+    const amounInCents = Math.round(Number(formData.amount) * 100);
 
     const newTransaction: TransactionToCreate = {
       amountInCents: isIncome ? amounInCents : -amounInCents,
