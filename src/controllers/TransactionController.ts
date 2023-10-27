@@ -6,11 +6,17 @@ import { NextRequest, NextResponse } from "next/server";
 export default class TransactionController implements ITransactionController {
   constructor(private readonly transactionService: ITransactionService) {}
 
-  async create(request: any, { params }: { params: { email: string; }; }): Promise<NextResponse<{ id: string }>> {
+  async create(request: any, { params }: { params: { email: string; }; }): Promise<NextResponse<{ id: string } | { message: string }>> {
     const body: TransactionToCreate = await request.json();
-    const transaction = await this.transactionService.create(params.email, body);
-
-    return NextResponse.json(transaction, { status: 201 })
+    try {
+      const transaction = await this.transactionService.create(params.email, body);
+  
+      return NextResponse.json(transaction, { status: 201 })
+    } catch (error: any) {
+      return NextResponse.json({
+        message: error?.message || 'Internal Error'
+      }, { status: 400 })
+    }
   }
   
   async index(request: NextRequest, { params }: { params: { email: string; }; }): Promise<NextResponse<ITransaction[]>> {

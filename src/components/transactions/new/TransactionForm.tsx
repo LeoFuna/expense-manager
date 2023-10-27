@@ -38,7 +38,7 @@ export default function TransactionForm({
   const [ openDialog, setOpenDialog ] = useState(false);
   const [hadError, setHadError] = useState(false);
   
-  const createTransaction = (formData: any) => {
+  const createTransaction = async (formData: any) => {
     const isIncome = urlParams.operationType === 'income';
     const amounInCents = Math.round(Number(formData.amount) * 100);
 
@@ -49,18 +49,20 @@ export default function TransactionForm({
       createdAt: getLocaleISOString(),
     }
 
-    fetch(`/api/transactions/${email}`, {
-      method: 'POST',
-      body: JSON.stringify(newTransaction),
-    })
-    .then(() => {
+    try {
+      const dataFetched = await fetch(`/api/transactions/${email}`, {
+        method: 'POST',
+        body: JSON.stringify(newTransaction),
+      });
+      // https://stackoverflow.com/questions/38235715/fetch-reject-promise-and-catch-the-error-if-status-is-not-ok
+      if (!dataFetched.ok) throw new Error((await dataFetched.json())?.message);
+      
       setHadError(false);
       reset();
-    })
-    .catch(() => setHadError(true))
-    .finally(() => {
-      setOpenDialog(true);
-    });
+    } catch (error: any) {
+      setHadError(true)
+    }
+    setOpenDialog(true);
   }
 
   useEffect(() => {

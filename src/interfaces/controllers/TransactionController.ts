@@ -3,6 +3,6 @@ import { ITransaction } from "../Transaction";
 
 export interface ITransactionController {
   index(request: any, { params }: { params: { email: string } }): Promise<NextResponse<ITransaction[]>>;
-  create(request: any, { params }: { params: { email: string } }): Promise<NextResponse<{ id: string }>>;
+  create(request: any, { params }: { params: { email: string } }): Promise<NextResponse<{ message: string } | { id: string }>>;
   getBalance(request: any, { params }: { params: { email: string } }): Promise<NextResponse<{ totalIncomeInCents: number; totalOutcomeInCents: number; }>>;
 }
