@@ -1,0 +1,8 @@
+{
+  "crons": [
+    {
+      "path": "/api/accounts/monthlyCreation",
+      "schedule": "0 5 * * *"
+    }
+  ]
+}
