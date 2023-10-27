@@ -4,6 +4,7 @@ import IAccountRepository from "@/interfaces/repositories/AccountRepository";
 
 export default class AccountService implements IAccountService {
   constructor(private readonly accountRepo: IAccountRepository) {}
+
   async update(email: string, data: IAccount, year: number, month: number): Promise<{ id: string; } | null> {
     const account = await this.show(email, year, month);
     if (!account) {
@@ -14,6 +15,7 @@ export default class AccountService implements IAccountService {
     
     return { id: account.id };
   }
+
   async checkIfIsANewUser(email: string): Promise<boolean> {
     const accountFound = await this.accountRepo.verifyIfAccountExists(email);
     return !accountFound;
@@ -35,16 +37,17 @@ export default class AccountService implements IAccountService {
     return { id: repoResponse.id, balance: repoResponse.balanceInCents / 100 };
   }
 
-  async createAccountForNewMonth(email: string): Promise<IAccount | null> {
-    const account = await this.accountRepo.show(email, new Date().getFullYear(), new Date().getMonth());
-    if (!account) {
-      const newAccount = await this.accountRepo.create({
+  async createMonthAccounts(): Promise<IAccount[]> {
+    const accounts = await this.accountRepo.index();
+    
+    const accountsCreatedPromises = accounts.map(async ({ email }: { email: string }) => {
+      return this.create({
         email,
         balanceInCents: 0,
         monthInNumber: new Date().getMonth(),
       });
-      return newAccount;
-    }
-    return null;
+    });
+
+    return await Promise.all(accountsCreatedPromises);
   }
 }

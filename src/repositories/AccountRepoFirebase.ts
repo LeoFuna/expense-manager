@@ -3,6 +3,11 @@ import { IAccount, IAccountApi } from "@/interfaces/Account";
 import IAccountRepository from "@/interfaces/repositories/AccountRepository";
 
 export default class AccountRepoFirebase implements IAccountRepository{
+  async index(): Promise<{ email: string }[]> {
+    const accounts = await dbAdmin.collection('accounts').get();
+    return accounts.docs.map(account => ({ email: account.id }));
+  }
+  
   async update(email: string, data: IAccountApi, year: number): Promise<{ id: string }> {
     await dbAdmin.collection('accounts')
       .doc(email)

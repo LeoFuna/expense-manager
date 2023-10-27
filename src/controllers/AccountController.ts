@@ -5,6 +5,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export default class AccountController implements IAccountController {
   constructor(private readonly accountService: IAccountService) {}
+
   async update(req: NextRequest, { params }: { params: { email: string; }; }): Promise<NextResponse<{ id: string; } | null>> {
     const { searchParams } = new URL(req.url);
     const month = searchParams.get('month');
@@ -41,9 +42,8 @@ export default class AccountController implements IAccountController {
     return NextResponse.json(serviceResponse, { status: 200 });
   }
 
-  async createAccountForNewMonth(req: NextRequest, { params }: { params: { email: string } }): Promise<NextResponse<IAccount | null>>{
-    const { email } = params;
-    const account = await this.accountService.createAccountForNewMonth(email);
+  async createMonthAccounts(req: NextRequest): Promise<NextResponse<IAccount[]>>{
+    const account = await this.accountService.createMonthAccounts();
 
     return NextResponse.json(account, { status: 200 });
   }
