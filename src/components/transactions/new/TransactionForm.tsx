@@ -8,7 +8,7 @@ import { TransactionToCreate } from "@/interfaces/services/TransactionService"
 import { getLocaleISOString } from "@/utils/date.utils"
 import FullPageDialog from "@/components/core/FullPageDialog"
 import { FaCheckCircle, FaTimesCircle } from "react-icons/fa"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 type TransactionFormProps = {
   urlParams: {
@@ -53,13 +53,23 @@ export default function TransactionForm({
       method: 'POST',
       body: JSON.stringify(newTransaction),
     })
-    .then(() => setHadError(false))
+    .then(() => {
+      setHadError(false);
+      reset();
+    })
     .catch(() => setHadError(true))
     .finally(() => {
       setOpenDialog(true);
-      reset();
     });
   }
+
+  useEffect(() => {
+    const timer: NodeJS.Timeout = setTimeout(() => {
+      setOpenDialog(false);
+      setHadError(false);
+    }, 2500);
+    return () => clearTimeout(timer);
+  }, [openDialog])
 
   return (
     <>
