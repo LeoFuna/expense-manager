@@ -20,7 +20,7 @@ export default class AccountService implements IAccountService {
   }
 
   async create(data: IAccount): Promise<IAccount> {
-    // Aqui entram as validaçoes necessárias
+    //TO DO: Aqui entram as validaçoes necessárias
     await this.accountRepo.create(data);
     
     return data;
@@ -33,5 +33,18 @@ export default class AccountService implements IAccountService {
     }
 
     return { id: repoResponse.id, balance: repoResponse.balanceInCents / 100 };
+  }
+
+  async createAccountForNewMonth(email: string): Promise<IAccount | null> {
+    const account = await this.accountRepo.show(email, new Date().getFullYear(), new Date().getMonth());
+    if (!account) {
+      const newAccount = await this.accountRepo.create({
+        email,
+        balanceInCents: 0,
+        monthInNumber: new Date().getMonth(),
+      });
+      return newAccount;
+    }
+    return null;
   }
 }
