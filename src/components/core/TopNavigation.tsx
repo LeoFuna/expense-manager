@@ -1,10 +1,13 @@
 'use client'
+import { useCreateAccountNewMonth } from "@/hooks/account";
 import { useDateNavigation } from "@/hooks/date";
 import Image from "next/image";
 import { FaBell, FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 
-export default function TopNavigation({ avatar }: { avatar?: string | null }) {
+export default function TopNavigation({ avatar, email }: { avatar?: string | null, email?: string | null }) {
   const { currentMonthInBr, currentYear, changeMonth } = useDateNavigation();
+  useCreateAccountNewMonth({ email });
+  
   return (
     <header className="flex items-center justify-between w-screen max-w-md h-14 py-8 px-4">
       <Image

@@ -8,7 +8,7 @@ import { TransactionToCreate } from "@/interfaces/services/TransactionService"
 import { getLocaleISOString } from "@/utils/date.utils"
 import FullPageDialog from "@/components/core/FullPageDialog"
 import { FaCheckCircle, FaTimesCircle } from "react-icons/fa"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 type TransactionFormProps = {
   urlParams: {
@@ -38,7 +38,7 @@ export default function TransactionForm({
   const [ openDialog, setOpenDialog ] = useState(false);
   const [hadError, setHadError] = useState(false);
   
-  const createTransaction = (formData: any) => {
+  const createTransaction = async (formData: any) => {
     const isIncome = urlParams.operationType === 'income';
     const amounInCents = Math.round(Number(formData.amount) * 100);
 
@@ -49,17 +49,29 @@ export default function TransactionForm({
       createdAt: getLocaleISOString(),
     }
 
-    fetch(`/api/transactions/${email}`, {
-      method: 'POST',
-      body: JSON.stringify(newTransaction),
-    })
-    .then(() => setHadError(false))
-    .catch(() => setHadError(true))
-    .finally(() => {
-      setOpenDialog(true);
+    try {
+      const dataFetched = await fetch(`/api/transactions/${email}`, {
+        method: 'POST',
+        body: JSON.stringify(newTransaction),
+      });
+      // https://stackoverflow.com/questions/38235715/fetch-reject-promise-and-catch-the-error-if-status-is-not-ok
+      if (!dataFetched.ok) throw new Error((await dataFetched.json())?.message);
+      
+      setHadError(false);
       reset();
-    });
+    } catch (error: any) {
+      setHadError(true)
+    }
+    setOpenDialog(true);
   }
+
+  useEffect(() => {
+    const timer: NodeJS.Timeout = setTimeout(() => {
+      setOpenDialog(false);
+      setHadError(false);
+    }, 2500);
+    return () => clearTimeout(timer);
+  }, [openDialog])
 
   return (
     <>

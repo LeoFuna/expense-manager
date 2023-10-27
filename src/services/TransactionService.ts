@@ -12,6 +12,13 @@ export default class TransactionService implements ITransactionService {
   ) {}
 
   async create(email: string, transactionData: TransactionToCreate): Promise<{ id: string }> {
+    // TO DO: validaçoes básicas...implementar validaçoes mais robustas.
+    if (transactionData.amountInCents === 0) {
+      throw new Error("Amount in cents can't be zero");
+    }
+    if (transactionData.categoryId === '0') {
+      throw new Error("Transaction Category is required!");
+    }
     const createdAtDate = new Date(transactionData.createdAt);
     const transaction: ITransaction = {
       ...transactionData,

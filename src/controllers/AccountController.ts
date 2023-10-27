@@ -39,5 +39,12 @@ export default class AccountController implements IAccountController {
     const serviceResponse = await this.accountService.show(email, Number(fullYear), Number(month));
 
     return NextResponse.json(serviceResponse, { status: 200 });
-  }  
+  }
+
+  async createAccountForNewMonth(req: NextRequest, { params }: { params: { email: string } }): Promise<NextResponse<IAccount | null>>{
+    const { email } = params;
+    const account = await this.accountService.createAccountForNewMonth(email);
+
+    return NextResponse.json(account, { status: 200 });
+  }
 }

@@ -11,7 +11,10 @@ export default async function Home() {
     <main className="flex flex-col items-center overflow-y-hidden h-screen">
       <DateContextProvider>
         <>
-          <TopNavigation avatar={session?.user?.image} />
+          <TopNavigation
+            avatar={session?.user?.image}
+            email={session?.user?.email}
+          />
           <AccountDashboard />
           <BottomNavigation />
         </>
