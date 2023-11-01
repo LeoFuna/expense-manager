@@ -38,8 +38,9 @@ export default class AccountService implements IAccountService {
   }
 
   async createMonthAccounts(): Promise<IAccount[]> {
+    console.log('Index')
     const accounts = await this.accountRepo.index();
-    
+    console.log('create')
     const accountsCreatedPromises = accounts.map(async ({ email }: { email: string }) => {
       return this.create({
         email,
@@ -47,7 +48,7 @@ export default class AccountService implements IAccountService {
         monthInNumber: new Date().getMonth(),
       });
     });
-
+    console.log('return')
     return await Promise.all(accountsCreatedPromises);
   }
 }
