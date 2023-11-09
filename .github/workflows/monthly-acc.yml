@@ -2,7 +2,7 @@ name: Monthly API Request
 
 on:
   schedule:
-    - cron: '*/5 * * * *'
+    - cron: '0 6 1 * *'
 
 jobs:
   send-api-request:
@@ -10,11 +10,11 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4.1.1
 
     - name: Request generate accs
       run: |
-          echo "Generating... $API_ENDPOINT"
+          echo "Creating..."
           curl -X POST "https://expense-manager-pink.vercel.app/$API_ENDPOINT"
       env:
         API_ENDPOINT: ${{ secrets.MONTH_ACC_API_ENDPOINT }}
