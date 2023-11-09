@@ -7,7 +7,7 @@ import GoogleProvider from 'next-auth/providers/google';
 
 const ONE_DAY = 24 * 60 * 60;
 
-const authOptions: NextAuthOptions = {
+export const authOptions: NextAuthOptions = {
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_ID as string,
