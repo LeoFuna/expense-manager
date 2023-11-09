@@ -15,7 +15,7 @@ jobs:
 
     - name: Check Production Environment
       run: |
-        if [ "${{ env.ENVIRONMENT }}" = "production" ]; then
+        if [ "${{ secrets.ENVIRONMENT }}" = "production" ]; then
           curl -X GET "https://expense-manager-pink.vercel.app/$API_ENDPOINT"
         else
           echo "Skipping action in non-production environment."
