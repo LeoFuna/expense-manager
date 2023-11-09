@@ -15,6 +15,6 @@ jobs:
     - name: Request generate accs
       run: |
           echo "Generating... $API_ENDPOINT"
-          curl -X GET "https://expense-manager-pink.vercel.app/$API_ENDPOINT"
+          curl -X POST "https://expense-manager-pink.vercel.app/$API_ENDPOINT"
       env:
         API_ENDPOINT: ${{ secrets.MONTH_ACC_API_ENDPOINT }}
