@@ -70,4 +70,4 @@
 
 
 ## Próximos Passos
-- Permitir a criaçao de uma transação diretamente no sistema
+- Permitir a criaçao de uma transação diretamente no sistema.
