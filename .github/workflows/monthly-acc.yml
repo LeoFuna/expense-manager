@@ -2,8 +2,7 @@ name: Monthly API Request
 
 on:
   schedule:
-    - cron: '0 6 1 * *'
-  workflow_dispatch:
+    - cron: '*/5 * * * *'
 
 jobs:
   send-api-request:
@@ -15,7 +14,7 @@ jobs:
 
     - name: Check Production Environment
       run: |
-        if [ "${{ secrets.ENVIRONMENT }}" = "production" ]; then
+        if [ "${{ env.ENVIRONMENT }}" = "production" ]; then
           curl -X GET "https://expense-manager-pink.vercel.app/$API_ENDPOINT"
         else
           echo "Skipping action in non-production environment."
