@@ -12,14 +12,9 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Check Production Environment
+    - name: Request generate accs
       run: |
-        if [ "${{ env.ENVIRONMENT }}" = "production" ]; then
+          echo "Generating..."
           curl -X GET "https://expense-manager-pink.vercel.app/$API_ENDPOINT"
-        else
-          echo "Skipping action in non-production environment."
-        fi
       env:
-        ENVIRONMENT: ${{ secrets.ENVIRONMENT }}
         API_ENDPOINT: ${{ secrets.API_ENDPOINT }}
-        MY_SECRET_TOKEN: ${{ secrets.MY_SECRET_TOKEN }}
