@@ -1,5 +1,5 @@
 import { AccountControllerFactory } from "@/factories/AccountControllerFactory";
-import { authorized } from "@/utils/middleware.utils";
+import { authorized, handleJointAccounts } from "@/utils/middleware.utils";
 import { NextRequest, NextResponse } from "next/server";
 
 const accountController = new AccountControllerFactory().createAccountController();
@@ -8,6 +8,7 @@ export async function GET(request: NextRequest, { params }: { params: { email: s
   if (!await authorized(request)) {
     return NextResponse.json({ message: 'Not authorized' }, { status: 401 });
   }
-  
-  return accountController.show(request, { params: { email: params.email } });
+  await handleJointAccounts(params);
+
+  return accountController.show(request, { params });
 }

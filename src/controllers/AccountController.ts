@@ -47,4 +47,11 @@ export default class AccountController implements IAccountController {
 
     return NextResponse.json(account, { status: 200 });
   }
+
+  async getJointAccountOwner(req: NextRequest, { params }: { params: { email: string; }; }): Promise<NextResponse<string | null>> {
+    const { email } = params;
+    const serviceResponse = await this.accountService.getJointAccountOwner(email);
+
+    return NextResponse.json(serviceResponse, { status: 200 });
+  }
 }

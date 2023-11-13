@@ -1,7 +1,6 @@
 'use client';
 import { usePathname, useRouter } from 'next/navigation';
-import { FaHouse, FaPlus, FaXmark } from 'react-icons/fa6';
-import { FiTrendingDown, FiTrendingUp } from 'react-icons/fi';
+import { FaHouse, FaPlus, FaXmark, FaCoins, FaChartPie, FaUser } from 'react-icons/fa6';
 import { useState } from 'react';
 import BottomNavigationModal from './BottomNavigationModal';
 
@@ -25,8 +24,9 @@ export default function BottomNavigation() {
       <button
         className={`${setButtonsColor('/transactions')} text-light-20 flex flex-col justify-center items-center gap-1`}
         onClick={() => router.push('/transactions')}
+        disabled
       >
-        <FaHouse size={24} />
+        <FaCoins size={24} />
         <h1 className='regular-xs'>Transações</h1>
       </button>
       <button
@@ -35,12 +35,18 @@ export default function BottomNavigation() {
       >
         { isModalOpen ? <FaXmark size={24} /> : <FaPlus size={24} /> }
       </button>
-      <button className='text-light-20 flex flex-col justify-center items-center gap-1'>
-        <FaHouse size={24} />
+      <button
+        className='text-light-20 flex flex-col justify-center items-center gap-1'
+        disabled
+      >
+        <FaChartPie size={24} />
         <h1 className='regular-xs'>Orçamento</h1>
       </button>
-      <button className='text-light-20 flex flex-col justify-center items-center gap-1'>
-        <FaHouse size={24} />
+      <button
+        className='text-light-20 flex flex-col justify-center items-center gap-1'
+        disabled
+      >
+        <FaUser size={24} />
         <h1 className='regular-xs'>Perfil</h1>
       </button>
       { isModalOpen && <BottomNavigationModal />}

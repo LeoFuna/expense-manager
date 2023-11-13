@@ -47,4 +47,13 @@ export default class AccountRepoFirebase implements IAccountRepository{
 
     return data;
   }
+
+  async getJointAccountOwner(email: string): Promise<string | null> {
+    const jointAcc = await dbAdmin.collection('jointAccounts').doc(email).get();
+
+    if (!jointAcc.exists) {
+      return null;
+    }
+    return jointAcc.data()?.ownerEmail;
+  }
 }

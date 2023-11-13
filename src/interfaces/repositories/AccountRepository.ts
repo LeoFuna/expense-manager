@@ -6,4 +6,5 @@ export default interface IAccountRepository {
   create(data: IAccount): Promise<IAccount>;
   update(email: string, data: {id: string, balanceInCents: number}, year: number): Promise<{id: string}>;
   verifyIfAccountExists(email: string): Promise<boolean>;
+  getJointAccountOwner(email: string): Promise<string | null>;
 }
