@@ -50,4 +50,10 @@ export default class AccountService implements IAccountService {
 
     return await Promise.all(accountsCreatedPromises);
   }
+
+  async getJointAccountOwner(email: string): Promise<string | null> {
+    const jointAcc = await this.accountRepo.getJointAccountOwner(email);
+
+    return jointAcc;
+  }
 }
