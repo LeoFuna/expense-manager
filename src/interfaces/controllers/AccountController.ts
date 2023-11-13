@@ -6,4 +6,5 @@ export interface IAccountController {
   create(req: NextRequest, res: NextResponse): Promise<NextResponse<IAccount>>;
   update(req: NextRequest, { params }: { params: { email: string }}): Promise<NextResponse<{ id: string } | null>>;
   createMonthAccounts(req: NextRequest): Promise<NextResponse<IAccount[]>>;
+  getJointAccountOwner(req: NextRequest, { params }: { params: { email: string }}): Promise<NextResponse<string | null>>;
 }
