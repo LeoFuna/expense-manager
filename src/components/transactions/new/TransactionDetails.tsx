@@ -2,7 +2,8 @@
 import { Button } from "@/components/core/Button";
 import { useFetch } from "@/hooks/fetch";
 import { ITransactionCategory } from "@/interfaces/TransactionCategory";
-import { FieldValues, UseFormRegister } from "react-hook-form";
+import { TransactionFormType } from "@/utils/types.utils";
+import { FieldErrors, UseFormRegister } from "react-hook-form";
 
 /*
   - Anexo: TO DO: inicialmente nao tera mas planejaremos
@@ -12,14 +13,16 @@ import { FieldValues, UseFormRegister } from "react-hook-form";
 
 type TransactionDetailsProps = {
   operationType: ITransactionCategory['operationType'];
-  register: UseFormRegister<FieldValues>;
+  register: UseFormRegister<TransactionFormType>;
   onSubmit: () => void;
+  errors: FieldErrors<TransactionFormType>;
 }
 
 export default function TransactionDetails({
   operationType,
   register,
   onSubmit,
+  errors,
 }: TransactionDetailsProps) {
   const { data } = useFetch({
     url: '/api/transaction-categories',
@@ -48,6 +51,7 @@ export default function TransactionDetails({
           id="description"
           placeholder="Descrição"
         />
+        {!!errors?.description && <p className="text-warning-100 text-sm">{errors.description.message}</p>}
       </div>
       <Button onClick={onSubmit}>Salvar</Button>
     </div>

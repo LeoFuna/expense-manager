@@ -1,15 +1,18 @@
 import { ITransactionCategory } from "@/interfaces/TransactionCategory";
 import TransactionAmountInput from "./TransactionAmountInput";
-import { FieldValues, UseFormRegister } from "react-hook-form";
+import { FieldErrors, UseFormRegister } from "react-hook-form";
+import { TransactionFormType } from "@/utils/types.utils";
 
 type TransactionAmountProps = {
   operationType: ITransactionCategory['operationType'];
-  register: UseFormRegister<FieldValues>;
+  register: UseFormRegister<TransactionFormType>;
+  errors: FieldErrors<TransactionFormType>
 }
 
 export default function TransactionAmount({
   operationType,
   register,
+  errors
 }: TransactionAmountProps) {
   return (
     <div className="flex flex-col gap-3 px-6 pt-14">
@@ -21,6 +24,7 @@ export default function TransactionAmount({
           register={register}
         />
       </div>
+      {!!errors?.amount && <p className="text-warning-100 text-sm">{errors.amount.message}</p>}
     </div>
   )
 }
