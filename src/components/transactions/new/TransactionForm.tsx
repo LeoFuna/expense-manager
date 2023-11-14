@@ -3,12 +3,15 @@
 import { ITransactionCategory } from "@/interfaces/TransactionCategory"
 import TransactionAmount from "./TransactionAmount"
 import TransactionDetails from "./TransactionDetails"
-import { useForm } from "react-hook-form"
+import { useForm, useFormState } from "react-hook-form"
 import { TransactionToCreate } from "@/interfaces/services/TransactionService"
 import { getLocaleISOString } from "@/utils/date.utils"
 import FullPageDialog from "@/components/core/FullPageDialog"
 import { FaCheckCircle, FaTimesCircle } from "react-icons/fa"
 import { useEffect, useState } from "react"
+import { createTransactionFormSchema } from "@/utils/validation.utils"
+import { TransactionFormType } from "@/utils/types.utils"
+import { zodResolver } from "@hookform/resolvers/zod"
 
 type TransactionFormProps = {
   urlParams: {
@@ -34,7 +37,10 @@ export default function TransactionForm({
   urlParams,
   email,
 }: TransactionFormProps) {
-  const { register, handleSubmit, reset } = useForm();
+  const { register, handleSubmit, reset, formState: { errors } } = useForm<TransactionFormType>({
+    resolver: zodResolver(createTransactionFormSchema),
+  });
+
   const [ openDialog, setOpenDialog ] = useState(false);
   const [hadError, setHadError] = useState(false);
   
@@ -79,11 +85,13 @@ export default function TransactionForm({
         <TransactionAmount
           operationType={urlParams.operationType}
           register={register}
+          errors={errors}
         />
         <TransactionDetails
           operationType={urlParams.operationType}
           register={register}
-          onSubmit={handleSubmit(createTransaction)} 
+          onSubmit={handleSubmit(createTransaction)}
+          errors={errors}
         />
       </form>
       { openDialog && 

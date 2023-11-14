@@ -1,11 +1,12 @@
 'use client'
 
 import { ITransactionCategory } from "@/interfaces/TransactionCategory";
+import { TransactionFormType } from "@/utils/types.utils";
 import { FieldValues, UseFormRegister } from "react-hook-form";
 
 type TransactionAmountInputProps = {
   operationType: ITransactionCategory['operationType'];
-  register: UseFormRegister<FieldValues>;
+  register: UseFormRegister<TransactionFormType>;
 }
 
 export default function TransactionAmountInput({
