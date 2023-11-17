@@ -40,7 +40,7 @@ export default class AccountService implements IAccountService {
     return { id: repoResponse.id, balance: repoResponse.balanceInCents / 100 };
   }
 
-  async createMonthAccounts(): Promise<IAccount[]> {
+  async createMonthAccounts(): Promise<{ message: string }> {
     const accounts = await this.accountRepo.index();
 
     const accountsCreatedPromises = accounts.map(async ({ email }: { email: string }) => {
@@ -50,8 +50,8 @@ export default class AccountService implements IAccountService {
         monthInNumber: new Date().getMonth(),
       });
     });
-
-    return await Promise.all(accountsCreatedPromises);
+    await Promise.all(accountsCreatedPromises);
+    return { message: 'Created' }
   }
 
   async getJointAccountOwner(email: string): Promise<string | null> {
