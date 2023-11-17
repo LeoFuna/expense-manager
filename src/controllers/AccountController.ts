@@ -42,7 +42,7 @@ export default class AccountController implements IAccountController {
     return NextResponse.json(serviceResponse, { status: 200 });
   }
 
-  async createMonthAccounts(req: NextRequest): Promise<NextResponse<IAccount[]>>{
+  async createMonthAccounts(req: NextRequest): Promise<NextResponse<{ message: string }>>{
     const account = await this.accountService.createMonthAccounts();
 
     return NextResponse.json(account, { status: 200 });
