@@ -5,6 +5,6 @@ export interface IAccountService {
   show(email: string, year: number, month: number): Promise<{ id: string, balance: number } | null>;
   create(data: IAccount): Promise<IAccount>;
   checkIfIsANewUser(email: string): Promise<boolean>;
-  createMonthAccounts(): Promise<IAccount[]>;
+  createMonthAccounts(): Promise<{ message: string }>;
   getJointAccountOwner(email: string): Promise<string | null>;
 }

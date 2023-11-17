@@ -3,6 +3,7 @@ import { ITransaction } from "@/interfaces/Transaction";
 import { ITransactionRepository } from "@/interfaces/repositories/TransactionRepository";
 import { IAccountService } from "@/interfaces/services/AccountService";
 import { ITransactionService, TransactionToCreate } from "@/interfaces/services/TransactionService";
+import { TransactionCreateSchema } from "@/utils/validation.utils";
 
 
 export default class TransactionService implements ITransactionService {
@@ -12,13 +13,8 @@ export default class TransactionService implements ITransactionService {
   ) {}
 
   async create(email: string, transactionData: TransactionToCreate): Promise<{ id: string }> {
-    // TO DO: validaçoes básicas...implementar validaçoes mais robustas.
-    if (transactionData.amountInCents === 0) {
-      throw new Error("Amount in cents can't be zero");
-    }
-    if (transactionData.categoryId === '0') {
-      throw new Error("Transaction Category is required!");
-    }
+    await TransactionCreateSchema.parseAsync(transactionData);
+  
     const createdAtDate = new Date(transactionData.createdAt);
     const transaction: ITransaction = {
       ...transactionData,

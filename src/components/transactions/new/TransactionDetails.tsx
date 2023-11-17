@@ -7,8 +7,6 @@ import { FieldErrors, UseFormRegister } from "react-hook-form";
 
 /*
   - Anexo: TO DO: inicialmente nao tera mas planejaremos
-  - Recorrente: TO DO: planejar como implementar para que nao precisemos todos
-    os meses criar transacoes de custos fixos
 */
 
 type TransactionDetailsProps = {
@@ -16,6 +14,7 @@ type TransactionDetailsProps = {
   register: UseFormRegister<TransactionFormType>;
   onSubmit: () => void;
   errors: FieldErrors<TransactionFormType>;
+  isSubmitting: boolean;
 }
 
 export default function TransactionDetails({
@@ -23,6 +22,7 @@ export default function TransactionDetails({
   register,
   onSubmit,
   errors,
+  isSubmitting,
 }: TransactionDetailsProps) {
   const { data } = useFetch({
     url: '/api/transaction-categories',
@@ -31,6 +31,7 @@ export default function TransactionDetails({
     },
     dependencies: [operationType],
   });
+
   return (
     <div className="absolute flex flex-col p-4 py-9 h-[65%] rounded-t-3xl w-full bottom-0 left-0 right-0 bg-light-100">
       <div className="flex flex-col gap-4 h-4/5">
@@ -53,7 +54,9 @@ export default function TransactionDetails({
         />
         {!!errors?.description && <p className="text-warning-100 text-sm">{errors.description.message}</p>}
       </div>
-      <Button onClick={onSubmit}>Salvar</Button>
+      <Button onClick={onSubmit} disabled={isSubmitting}>
+        Salvar
+      </Button>
     </div>
   )
 }

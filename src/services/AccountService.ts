@@ -1,11 +1,14 @@
 import { IAccount } from "@/interfaces/Account";
 import { IAccountService } from "@/interfaces/services/AccountService";
 import IAccountRepository from "@/interfaces/repositories/AccountRepository";
+import { AccountCreateSchema, UpdateAccountBalanceSchema } from "@/utils/validation.utils";
 
 export default class AccountService implements IAccountService {
   constructor(private readonly accountRepo: IAccountRepository) {}
 
   async update(email: string, data: IAccount, year: number, month: number): Promise<{ id: string; } | null> {
+    await UpdateAccountBalanceSchema.parseAsync(data);
+    
     const account = await this.show(email, year, month);
     if (!account) {
       return null;
@@ -22,7 +25,7 @@ export default class AccountService implements IAccountService {
   }
 
   async create(data: IAccount): Promise<IAccount> {
-    //TO DO: Aqui entram as validaçoes necessárias
+    await AccountCreateSchema.parseAsync(data);
     await this.accountRepo.create(data);
     
     return data;
@@ -37,7 +40,7 @@ export default class AccountService implements IAccountService {
     return { id: repoResponse.id, balance: repoResponse.balanceInCents / 100 };
   }
 
-  async createMonthAccounts(): Promise<IAccount[]> {
+  async createMonthAccounts(): Promise<{ message: string }> {
     const accounts = await this.accountRepo.index();
 
     const accountsCreatedPromises = accounts.map(async ({ email }: { email: string }) => {
@@ -47,8 +50,8 @@ export default class AccountService implements IAccountService {
         monthInNumber: new Date().getMonth(),
       });
     });
-
-    return await Promise.all(accountsCreatedPromises);
+    await Promise.all(accountsCreatedPromises);
+    return { message: 'Created' }
   }
 
   async getJointAccountOwner(email: string): Promise<string | null> {
