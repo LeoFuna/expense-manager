@@ -12,6 +12,7 @@ import { useEffect, useState } from "react"
 import { createTransactionFormSchema } from "@/utils/validation.utils"
 import { TransactionFormType } from "@/utils/types.utils"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useSubmitting } from "@/hooks/core"
 
 type TransactionFormProps = {
   urlParams: {
@@ -40,11 +41,11 @@ export default function TransactionForm({
   const { register, handleSubmit, reset, formState: { errors } } = useForm<TransactionFormType>({
     resolver: zodResolver(createTransactionFormSchema),
   });
-
+  const { isSubmitting, submit } = useSubmitting();
   const [ openDialog, setOpenDialog ] = useState(false);
   const [hadError, setHadError] = useState(false);
   
-  const createTransaction = async (formData: any) => {
+  const createTransaction = async (formData: any): Promise<void> => {
     const isIncome = urlParams.operationType === 'income';
     const amounInCents = Math.round(Number(formData.amount) * 100);
 
@@ -88,9 +89,12 @@ export default function TransactionForm({
           errors={errors}
         />
         <TransactionDetails
+          isSubmitting={isSubmitting}
           operationType={urlParams.operationType}
           register={register}
-          onSubmit={handleSubmit(createTransaction)}
+          onSubmit={handleSubmit(
+            (formData: any) => submit(createTransaction(formData))
+          )}
           errors={errors}
         />
       </form>
