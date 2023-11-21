@@ -74,7 +74,7 @@
 - Permitir conta conjunta
   - Middleware para gestao de contas conjuntas OK
 - Proteçao de rotas de apis OK
-- Transaçoes do tipo recorrentes (planejar)
 - Validaçoes (Zod/Yup) OK
-- Logout
 - fix: falha segurança, dados do email sendo vazados no cron job OK
+- Logout (Prioritario)
+- Transaçoes do tipo recorrentes (planejar)
