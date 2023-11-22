@@ -7,4 +7,5 @@ export const config = { matcher: [
   "/",
   "/transactions",
   "/transactions/new",
+  "/profile",
 ]}
