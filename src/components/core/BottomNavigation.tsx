@@ -43,8 +43,8 @@ export default function BottomNavigation() {
         <h1 className='regular-xs'>Orçamento</h1>
       </button>
       <button
-        className='text-light-20 flex flex-col justify-center items-center gap-1'
-        disabled
+        className={`${setButtonsColor('/profile')} text-light-20 flex flex-col justify-center items-center gap-1`}
+        onClick={() => router.push('/profile')}
       >
         <FaUser size={24} />
         <h1 className='regular-xs'>Perfil</h1>
