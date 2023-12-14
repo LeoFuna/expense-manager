@@ -13,7 +13,7 @@ export default class AccountService implements IAccountService {
     if (!account) {
       return null;
     }
-    const newBalanceInCents = account.balance * 100 + data.balanceInCents;
+    const newBalanceInCents = Math.round(account.balance * 100 + data.balanceInCents);
     await this.accountRepo.update(email, { id: account.id, balanceInCents: newBalanceInCents }, year);
     
     return { id: account.id };
