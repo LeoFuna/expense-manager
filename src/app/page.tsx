@@ -8,7 +8,7 @@ export default async function Home() {
   const session = await getServerSession();
 
   return (
-    <main className="flex flex-col items-center overflow-y-hidden h-screen">
+    <main className="flex flex-col items-center overflow-y-hidden h-[100dvh]">
       <DateContextProvider>
         <>
           <TopNavigation
