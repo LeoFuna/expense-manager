@@ -18,7 +18,7 @@ export default async function NewTransaction({
 }: { searchParams: Pick<ITransactionCategory, 'operationType'> }) {  
   const session = await getServerSession();
   return (
-    <main className="flex flex-col items-center h-screen">
+    <main className="flex flex-col items-center h-[100dvh]">
       <DateContextProvider>
         <div
           className={`
