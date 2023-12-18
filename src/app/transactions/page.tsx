@@ -7,7 +7,7 @@ export default async function Transactions() {
   return (
     <main className="overflow-y-hidden h-screen">
       <TopNavigation avatar={session?.user?.image} />
-      <h1>Transacoes</h1>
+      <h1>Em construção...</h1>
       <BottomNavigation />
     </main>
   )
