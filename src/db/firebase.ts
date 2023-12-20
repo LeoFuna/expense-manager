@@ -1,4 +1,4 @@
-import { initializeApp, getApps } from 'firebase/app';
+import { initializeApp, getApps, getApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
@@ -10,9 +10,6 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_APP_ID,
 };
 
-const apps = getApps();
+const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
 
-const appFound = apps.find(({ name }) => name === 'DefaultApp');
-
-const app = appFound ? appFound : initializeApp(firebaseConfig, 'DefaultApp');
 export const db = getFirestore(app);
