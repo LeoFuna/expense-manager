@@ -1,5 +1,4 @@
 import { db } from "@/db/firebase";
-import { coll } from 'firebase-admin/firestore';
 import { IAccount, IAccountApi } from "@/interfaces/Account";
 import IAccountRepository from "@/interfaces/repositories/AccountRepository";
 import { addDoc, collection, doc, getDoc, getDocs, query, updateDoc, where } from "firebase/firestore";
