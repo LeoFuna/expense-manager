@@ -1,20 +1,27 @@
-import { dbAdmin } from "@/db/firebase-admin";
+import { db } from "@/db/firebase";
+import { coll } from 'firebase-admin/firestore';
 import { IAccount, IAccountApi } from "@/interfaces/Account";
 import IAccountRepository from "@/interfaces/repositories/AccountRepository";
+import { addDoc, collection, doc, getDoc, getDocs, query, updateDoc, where } from "firebase/firestore";
+import { dbAdmin } from "@/db/firebase-admin";
 
 export default class AccountRepoFirebase implements IAccountRepository{
   async index(): Promise<{ email: string }[]> {
-    const accounts = await dbAdmin.collection('accounts').listDocuments();
+    const accountsRef = collection(db, 'accounts');
+    const accounts = await getDocs(accountsRef);
 
-    return accounts.map(account => ({ email: account.id }));
+    const accountsList: { email: string }[] = [];
+    accounts.forEach((account) => {
+      accountsList.push({ email: account.id });
+    });
+
+    return accountsList;
   }
   
   async update(email: string, data: IAccountApi, year: number): Promise<{ id: string }> {
-    await dbAdmin.collection('accounts')
-      .doc(email)
-      .collection(`${year}`)
-      .doc(data.id)
-      .update({ balanceInCents: data.balanceInCents });
+    await updateDoc(doc(db, 'accounts', email, `${year}`, data.id), {
+      balanceInCents: data.balanceInCents,
+    });
 
     return { id: data.id };
   }
@@ -27,11 +34,11 @@ export default class AccountRepoFirebase implements IAccountRepository{
   }
 
   async show(email: string, year: number, month: number): Promise<IAccountApi | null> {
-    const account = await dbAdmin.collection('accounts')
-      .doc(email)
-      .collection(`${year}`)
-      .where('monthInNumber', '==', month)
-      .get();
+    const queryRef = query(
+      collection(db, 'accounts', email, `${year}`),
+      where('monthInNumber', '==', month)
+    );
+    const account = await getDocs(queryRef);
 
     if (!account.docs.length) {
       return null;
@@ -42,16 +49,22 @@ export default class AccountRepoFirebase implements IAccountRepository{
   }
 
   async create(data: IAccount): Promise<IAccount> {
-    await dbAdmin.collection('accounts').doc(data.email)
-      .collection(`${new Date().getFullYear()}`).add(data);
+    await addDoc(
+      collection(
+        db,
+        'accounts',
+        data.email,
+        `${new Date().getFullYear()}`
+      ), data)
 
     return data;
   }
 
   async getJointAccountOwner(email: string): Promise<string | null> {
-    const jointAcc = await dbAdmin.collection('jointAccounts').doc(email).get();
+    const docRef = doc(db, 'jointAccounts', email);
+    const jointAcc = await getDoc(docRef);
 
-    if (!jointAcc.exists) {
+    if (!jointAcc.exists()) {
       return null;
     }
     return jointAcc.data()?.ownerEmail;
