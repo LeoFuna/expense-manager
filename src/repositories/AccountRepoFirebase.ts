@@ -1,13 +1,13 @@
-import { db } from "@/db/firebase";
 import { IAccount, IAccountApi } from "@/interfaces/Account";
 import IAccountRepository from "@/interfaces/repositories/AccountRepository";
-import { addDoc, collection, doc, getDoc, getDocs, query, updateDoc, where } from "firebase/firestore";
+import { addDoc, getDoc, getDocs, updateDoc } from "firebase/firestore";
 import { dbAdmin } from "@/db/firebase-admin";
+import { accountRef, accountRefByMonth, accountRefByYear, accountsRef } from "@/utils/converters/Account";
+import { jointAccountsRef } from "@/utils/converters/JointAccount";
 
 export default class AccountRepoFirebase implements IAccountRepository{
   async index(): Promise<{ email: string }[]> {
-    const accountsRef = collection(db, 'accounts');
-    const accounts = await getDocs(accountsRef);
+    const accounts = await getDocs(accountsRef());
 
     const accountsList: { email: string }[] = [];
     accounts.forEach((account) => {
@@ -18,7 +18,7 @@ export default class AccountRepoFirebase implements IAccountRepository{
   }
   
   async update(email: string, data: IAccountApi, year: number): Promise<{ id: string }> {
-    await updateDoc(doc(db, 'accounts', email, `${year}`, data.id), {
+    await updateDoc(accountRef(email, year, data.id), {
       balanceInCents: data.balanceInCents,
     });
 
@@ -33,39 +33,33 @@ export default class AccountRepoFirebase implements IAccountRepository{
   }
 
   async show(email: string, year: number, month: number): Promise<IAccountApi | null> {
-    const queryRef = query(
-      collection(db, 'accounts', email, `${year}`),
-      where('monthInNumber', '==', month)
+    const account = await getDocs(
+      accountRefByMonth(email, year, month)
     );
-    const account = await getDocs(queryRef);
 
     if (!account.docs.length) {
       return null;
     }
     const monthBudget = account.docs[0];
 
-    return { id: monthBudget.id, ...monthBudget.data() } as IAccountApi;
+    return monthBudget.data();
   }
 
   async create(data: IAccount): Promise<IAccount> {
     await addDoc(
-      collection(
-        db,
-        'accounts',
-        data.email,
-        `${new Date().getFullYear()}`
-      ), data)
+      accountRefByYear(data.email, new Date().getFullYear()),
+      data
+    );
 
     return data;
   }
 
   async getJointAccountOwner(email: string): Promise<string | null> {
-    const docRef = doc(db, 'jointAccounts', email);
-    const jointAcc = await getDoc(docRef);
+    const jointAcc = await getDoc(jointAccountsRef(email));
 
     if (!jointAcc.exists()) {
       return null;
     }
-    return jointAcc.data()?.ownerEmail;
+    return jointAcc.data().ownerEmail;
   }
 }
