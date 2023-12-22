@@ -24,7 +24,6 @@ export default function BottomNavigation() {
       <button
         className={`${setButtonsColor('/transactions')} text-light-20 flex flex-col justify-center items-center gap-1`}
         onClick={() => router.push('/transactions')}
-        disabled
       >
         <FaCoins size={24} />
         <h1 className='regular-xs'>Transações</h1>
@@ -36,8 +35,11 @@ export default function BottomNavigation() {
         { isModalOpen ? <FaXmark size={24} /> : <FaPlus size={24} /> }
       </button>
       <button
-        className='text-light-20 flex flex-col justify-center items-center gap-1'
-        disabled
+        className={`
+          ${setButtonsColor('/budget')} text-light-20
+          flex flex-col justify-center items-center gap-1
+        `}
+        onClick={() => router.push('/budget')}
       >
         <FaChartPie size={24} />
         <h1 className='regular-xs'>Orçamento</h1>

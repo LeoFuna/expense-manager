@@ -4,7 +4,13 @@ import { useDateNavigation } from "@/hooks/date";
 import Image from "next/image";
 import { FaBell, FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 
-export default function TopNavigation({ avatar, email }: { avatar?: string | null, email?: string | null }) {
+type TopNavigationProps = {
+  avatar?: string | null,
+  email?: string | null,
+  hideNavigation?: boolean,
+}
+
+export default function TopNavigation({ avatar, email, hideNavigation }: TopNavigationProps) {
   const { currentMonthInBr, currentYear, changeMonth } = useDateNavigation();
   useCreateAccountNewMonth({ email });
   
@@ -17,7 +23,7 @@ export default function TopNavigation({ avatar, email }: { avatar?: string | nul
         width={44}
         height={44}
       />
-      <nav className="flex items-center justify-center gap-3 min-w-[50%]">
+      <nav className={`${ hideNavigation ? 'hidden' : '' }  flex items-center justify-center gap-3 min-w-[50%]`}>
         <button className="text-primary-100" onClick={() => changeMonth('prev')}>
           <FaChevronLeft size={16} />
         </button>
