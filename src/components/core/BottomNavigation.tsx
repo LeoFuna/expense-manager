@@ -44,8 +44,8 @@ export default function BottomNavigation() {
         className={`
           ${getOpenModalBtnAnimation(modalAction)}
           flex justify-center mb-5 items-center
-          text-light-100 bg-primary-100 w-12 h-12 rounded-full`
-        }
+          text-light-100 bg-primary-100 w-12 h-12 rounded-full
+        `}
       >
         { isModalOpen ? <FaXmark size={24} /> : <FaPlus size={24} /> }
       </button>
