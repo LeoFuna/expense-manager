@@ -11,6 +11,7 @@ export function Button ({ children, ...props }: ButtonProps) {
         bg-primary-100 font-semibold
         text-title-s text-light-80
         h-14 w-full rounded-lg p-2
+        disabled:opacity-70
         ${props?.className || ''}
       `}
     >
