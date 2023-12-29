@@ -67,7 +67,6 @@ export default function BottomNavigation() {
         <h1 className='regular-xs'>Perfil</h1>
       </button>
       { isModalOpen && <BottomNavigationModal />}
-
     </nav>
   )
 }
