@@ -1,5 +1,6 @@
 'use client'
 import { Button } from "@/components/core/Button";
+import { Spinner } from "@/components/core/Spinner";
 import { useFetch } from "@/hooks/fetch";
 import { ITransactionCategory } from "@/interfaces/TransactionCategory";
 import { TransactionFormType } from "@/utils/types.utils";
@@ -54,8 +55,11 @@ export default function TransactionDetails({
         />
         {!!errors?.description && <p className="text-warning-100 text-sm">{errors.description.message}</p>}
       </div>
-      <Button onClick={onSubmit} disabled={isSubmitting}>
-        Salvar
+      <Button 
+        onClick={onSubmit}
+        disabled={isSubmitting || !!Object.keys(errors).length}
+      >
+        {isSubmitting ? <Spinner /> : 'Salvar'}
       </Button>
     </div>
   )
