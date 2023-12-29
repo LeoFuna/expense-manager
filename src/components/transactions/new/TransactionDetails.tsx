@@ -15,6 +15,7 @@ type TransactionDetailsProps = {
   register: UseFormRegister<TransactionFormType>;
   onSubmit: () => void;
   errors: FieldErrors<TransactionFormType>;
+  isValid: boolean;
   isSubmitting: boolean;
 }
 
@@ -23,6 +24,7 @@ export default function TransactionDetails({
   register,
   onSubmit,
   errors,
+  isValid,
   isSubmitting,
 }: TransactionDetailsProps) {
   const { data } = useFetch({
@@ -57,7 +59,7 @@ export default function TransactionDetails({
       </div>
       <Button 
         onClick={onSubmit}
-        disabled={isSubmitting || !!Object.keys(errors).length}
+        disabled={isSubmitting || !isValid}
       >
         {isSubmitting ? <Spinner /> : 'Salvar'}
       </Button>

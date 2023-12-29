@@ -38,9 +38,16 @@ export default function TransactionForm({
   urlParams,
   email,
 }: TransactionFormProps) {
-  const { register, handleSubmit, reset, formState: { errors } } = useForm<TransactionFormType>({
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isValid }
+  } = useForm<TransactionFormType>({
+    mode: 'all',
     resolver: zodResolver(createTransactionFormSchema),
   });
+ 
   const { isSubmitting, submit } = useSubmitting();
   const [ openDialog, setOpenDialog ] = useState(false);
   const [hadError, setHadError] = useState(false);
@@ -96,6 +103,7 @@ export default function TransactionForm({
             (formData: any) => submit(createTransaction(formData))
           )}
           errors={errors}
+          isValid={isValid}
         />
       </form>
       { openDialog && 
