@@ -63,6 +63,37 @@ const config: Config = {
         'text-l': '18px',
         'text-m': '16px',
         'text-s': '12px',
+      },
+      keyframes: {
+        "rotate-90": {
+          from: {
+            transform: "rotate(0deg)"
+          },
+          to: {
+            transform: "rotate(90deg)"
+          },
+        },
+        "rotate-90-reverse": {
+          from: {
+            transform: "rotate(90deg)"
+          },
+          to: {
+            transform: "rotate(0deg)"
+          },
+        },
+        "appears": {
+          from: {
+            opacity: "0",
+          },
+          to: {
+            opacity: "1"
+          }
+        }
+      },
+      animation: {
+        "appears": "appears 0.3s ease-out forwards",
+        "rotate-90": "rotate-90 0.4s ease-out forwards",
+        "rotate-90-reverse": "rotate-90-reverse 0.4s ease-out forwards",
       }
     }
   },
