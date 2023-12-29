@@ -31,7 +31,7 @@ export default function BottomNavigationModal() {
   const router = useRouter();
 
   return (
-    <div className='flex gap-20 justify-center items-end fixed bottom-20 z-50 bg-light-20 bg-opacity-20 h-screen w-screen max-w-md'>
+    <div className='flex animate-appears gap-20 justify-center items-end fixed bottom-20 z-50 bg-light-20 bg-opacity-20 h-screen w-screen max-w-md'>
       <ModalButton onClick={() => router.push('/transactions/new?operationType=income')}>
         <FiTrendingUp size={24} />
       </ModalButton>

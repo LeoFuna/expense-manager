@@ -4,14 +4,22 @@ import { FaHouse, FaPlus, FaXmark, FaCoins, FaChartPie, FaUser } from 'react-ico
 import { useState } from 'react';
 import BottomNavigationModal from './BottomNavigationModal';
 
+const getOpenModalBtnAnimation = (modalAction?: 'open' | 'close') => {
+  if (modalAction === 'open') return 'animate-rotate-90-reverse';
+  if (modalAction === 'close') return 'animate-rotate-90';
+  return '';
+};
 
 export default function BottomNavigation() {
   const router = useRouter();
   const pathName = usePathname();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  // used to animate the modal button
+  const [modalAction, setModalAction] = useState<'open' | 'close'>();
+
   const setButtonsColor = (buttonPathName: string) => (
     pathName === buttonPathName ? 'text-primary-100' : 'text-light-20'
-  )
+  );
   return (
     <nav className='fixed bottom-0 w-screen max-w-md h-20 bg-light-80 flex justify-around items-center'>
       <button
@@ -29,8 +37,15 @@ export default function BottomNavigation() {
         <h1 className='regular-xs'>Transações</h1>
       </button>
       <button
-        onClick={() => setIsModalOpen(state => !state)}
-        className='flex justify-center mb-5 items-center text-light-100 bg-primary-100 w-12 h-12 rounded-full'
+        onClick={() => {
+          setModalAction(isModalOpen ? 'open' : 'close')
+          setIsModalOpen(state => !state)
+        }}
+        className={`
+          ${getOpenModalBtnAnimation(modalAction)}
+          flex justify-center mb-5 items-center
+          text-light-100 bg-primary-100 w-12 h-12 rounded-full`
+        }
       >
         { isModalOpen ? <FaXmark size={24} /> : <FaPlus size={24} /> }
       </button>
