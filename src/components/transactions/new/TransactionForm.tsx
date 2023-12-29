@@ -3,7 +3,7 @@
 import { ITransactionCategory } from "@/interfaces/TransactionCategory"
 import TransactionAmount from "./TransactionAmount"
 import TransactionDetails from "./TransactionDetails"
-import { useForm, useFormState } from "react-hook-form"
+import { useForm } from "react-hook-form"
 import { TransactionToCreate } from "@/interfaces/services/TransactionService"
 import { getLocaleISOString } from "@/utils/date.utils"
 import FullPageDialog from "@/components/core/FullPageDialog"
