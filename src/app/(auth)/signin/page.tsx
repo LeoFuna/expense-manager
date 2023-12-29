@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 export default async function SignIn() {
   return (
-    <main className="flex items-center flex-col py-11 md:px-[432px] px-4 h-screen">
+    <main className="flex items-center flex-col py-11 md:px-[432px] px-4 h-[100dvh]">
       <div className="relative w-11/12 max-w-md h-2/5">
         <Image src='/login-hero.svg' fill alt='Login Hero Image' />
       </div>
