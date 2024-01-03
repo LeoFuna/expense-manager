@@ -53,13 +53,24 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Set Vercel Args for production
+        if: github.ref == 'refs/heads/main'
+        run: echo "VERCEL_ARGS=--prod" >> $GITHUB_ENV
+
+      - name: Set Vercel Args for development
+        if: github.ref == 'refs/heads/staging'
+        run: echo "VERCEL_ARGS=" >> $GITHUB_ENV
+        
       - name: Deploy to Vercel
         uses: amondnet/vercel-action@v25
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-  
+          vercel-args: ${{ env.VERCEL_ARGS }}
+        env:
+          VERCEL_ARGS: ${{ env.VERCEL_ARGS }}
   handle-fail:
     runs-on: ubuntu-latest
     needs: [install, lint, deploy]
