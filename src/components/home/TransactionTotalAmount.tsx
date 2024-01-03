@@ -2,7 +2,7 @@
 
 import { useDateContext } from "@/contexts/dateContext"
 import { useFetch } from "@/hooks/fetch";
-import { Spinner } from "../core/Spinner";
+import Skeleton from "../core/Skeleton";
 
 export default function TransactionTotalBalance({ type, email }: { type: 'totalIncomeInCents' | 'totalOutcomeInCents', email: string }) {
   const dateContext = useDateContext();
@@ -16,8 +16,8 @@ export default function TransactionTotalBalance({ type, email }: { type: 'totalI
     }
   })
 
-  const spinnerColor = type === 'totalIncomeInCents' ? 'text-success-60' : 'text-danger-60';
-  if (isValidating) return <Spinner className={spinnerColor} />;
+  if (isValidating) return <Skeleton className="bg-light-40" />
+  
   return (
     <p className='title-2 text-sm'>
       R$ {totalAmountInCents ? totalAmountInCents[type] / 100 : 0}
