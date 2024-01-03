@@ -12,6 +12,7 @@ No fim, o intuito é realmente saber exatamente quanto eu posso ainda gastar no 
 - [Ferramentas](#ferramentas)
 - [Aprendizados](#aprendizados)
 - [Instruções para acessar o projeto localmente](#instruções-para-acessar-o-projeto-localmente)
+- [Estrutura do projeto](#estrutura-do-projeto)
 - [A aplicação](#a-aplicação)
 
 # Versões Necessárias
@@ -45,19 +46,54 @@ No fim, o intuito é realmente saber exatamente quanto eu posso ainda gastar no 
 ## Instruções para acessar o projeto localmente:
 
 1. Clone o repositório
-  * `git clone git@github.com:LeoFuna/expense-manager.git`.
-  * Entre na pasta do repositório que você acabou de clonar:
-    * `cd expense-manager`
-
-2. Instale as dependências:
-  * `npm install`
-
-3. Crie um arquivo `.env.local` na raiz da aplicação e insira os dados baseando-se no modelo `.env.local.sample`
-
-4. Inicie a aplicação:
-  * `npm run dev`
+```bash
+git clone git@github.com:LeoFuna/expense-manager.git
+```
+2. Entre na pasta do repositório que você acabou de clonar:
+```bash
+cd expense-manager
+```
+3. Instale as dependências:
+```bash
+npm install
+```
+4. Crie um arquivo `.env.local` na raiz da aplicação e insira os dados baseando-se no modelo `.env.local.sample`
+   
+5. Inicie a aplicação:
+```bash
+npm run dev
+```
 
 ---
+
+## Estrutura do projeto
+
+```bash
+src/
+  app/                # Rotas das páginas e api
+    api/              # Rotas de api
+    layout.tsx        # Layout raiz da aplicação
+    page.tsx          # Página Home
+  components/         # Componentes
+    auth/             # Componentes de autenticação
+    core/             # Componentes compartilhados
+    home/             # Componentes da página principal
+    profile/          # Componentes da perfil
+    transactions/     # Componentes das transações
+  contexts/           # Contextos da aplicação
+  controllers/        # Classes de Controladores das rotas de api
+  db/
+    firebase.js       # Conexão com o Firebase e seus serviços
+    firebase-admin.ts # Conexão com o firebase em modo admin
+  factories/          # Fábricas para as entidades
+  hooks/              # Hooks da aplicação
+  interfaces/         # Interfaces gerais da aplicação
+  repositories/       # Classes de repositórios
+  services/           # Classes de Serviços usados pelas rotas de api
+  utils/              # Funções úteis para a aplicação
+    convertes/        # Conversores de operações executadas no firestorage
+  middleware.js       # Middleware para bloqueio de rotas sem autenticação
+```
 
 # A aplicação
 
