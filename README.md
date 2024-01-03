@@ -1,80 +1,76 @@
-# Gestor de Gastos
+# Bem vindo ao Gestor de Gastos!
 
-## Casos de Uso
+Olá seja bem vindo(a) ao meu projeto Gestor de Gastos, o projeto é um sistema web paga gestão básica de gastos mês a mês.
+A idéia desse projeto veio a partir de uma dor minha, onde eu tenho diversas fontes de gastos (dinheiro, transferências, cartão de crédito), e era complicado gerenciar o meu gasto total no mês devido a quantidade de diferentes meios de saída.
+No fim, o intuito é realmente saber exatamente quanto eu posso ainda gastar no mês em questão.
 
-### Autenticação
-- Fazer login através do gmail
-- Não pode ter acesso à aplicação sem que esteja autenticado
-### Conta
-- Criar nova conta utilizando o email
-  - Se conta email já cadastrado, nao deve criar nova conta
-  - Após a primeira vez do usuário no sistema, ele nao cria novas contas e sim novos Saldos Mensais.
-- Apresentar os dados do saldo da conta quando dado um mês e ano especifico
-  - Caso esse mês não tenha dados, deve apresentar um `default` vazio. 
-- Criar Saldo Mensal quando dado um mes e ano especifico
-  - Esse saldo vai ser com base nos Saldo dos Orçamentos planejados.
-### Transações
-- Criar transação informando dia/mes/ano
-- Ver todas as transações de um determinado mes/ano
-- Ver o saldo de entradas e saídas de um determinado mês/ano
+---
 
-### Orçamentos
-- Criar um orçamento debaixo de um email
-  - Deve confirmar se quer atualizar o saldo do mes atual ou somente para os seguintes
-- Listar orçamentos do email
-- Editar um orçamento do email
-  - Deve confirmar se quer atualizar o saldo do mes atual ou somente para os seguintes
-- Apagar um orçamento do email
-  - Deve confirmar se quer atualizar o saldo do mes atual ou somente para os seguintes
+# Sumário
 
-## Endpoints
+- [Versões Necessárias](#versões-necessárias)
+- [Ferramentas](#ferramentas)
+- [Aprendizados](#aprendizados)
+- [Instruções para acessar o projeto localmente](#instruções-para-acessar-o-projeto-localmente)
+- [A aplicação](#a-aplicação)
 
-### Conta
-- Apresentar os dados do saldo da conta dado mes/ano [x]
-  - `GET /accounts/{email}/monthBudget?fullYear=2023&month=0`
-  - Query: `{ fullYear, month }`
-  - Response: `{ balance }`
-- Criar saldo mensal dado mes/ano
-  - `POST /accounts/{email}/monthBudget`
-  - Body: `{ fullYear, month }`
-  - Response: `{ balance }`
+# Versões Necessárias
+- Node 18.12
 
-### Transações
-- Criar transação informando dia/mes/ano [x]
-  - `POST /transactions/{email}`
-  - Body: `{ amountInCents, description?, categoryId, attachment?, createdAt }`
-  - Response: `{ id }`
-- Ver todas as transações de um determinado mes/ano [x]
-  - `GET /transactions/{email}?fullYear=2023&month=0`
-  - Query: `{ fullYear, month }`
-  - Response: `Transaction[]`
-- Ver o saldo de entradas e saídas de um determinado mês/ano [x]
-  - `GET /transactions/{email}/balance?fullYear=2023&month=0`
-  - Query: `{ fullYear, month }`
-  - Response: `{ incomeBalance, outcomeBalance }`
+# Ferramentas
 
-### Orçamentos
-- Criar um orçamento debaixo de um email
-  - `POST /budgets/{email}`
-  - Body: `{ categoryId, amountInCents }`
-- Listar orçamentos do email
-  - `GET /budgets/{email}`
-  - Response: `Budget[]`
-- Editar um orçamento do email
-  - `POST /budgets/{email}`
-  - Body: `{ categoryId, amountInCents }`
-- Apagar um orçamento do email
-  - `DELETE /budgets/{email}?id=myFakeId`
-  - Query: `{ id }`
-  - Response: `{ id }`
+- Next JS.
+- Firebase
+  - Firebase Client
+  - Firebase Admin
+  - Firestore
+- Next Auth
+- JWT
+- Tailwind CSS
+- React Hook Form
+- Typescript
+- Zod
+  
+---
 
+# Aprendizados
+- Controller-Service-Repository Pattern.
+- Github Actions.
+- Controle de sinal utilizando fetch nativo.
+- Propriedade CSS dvh.
+- Página de fallback de loading.
+- Dependabot para gestão de dependências.
+- Cron Jobs.
 
-## Próximos Passos
-- Cron job OK
-- Permitir conta conjunta
-  - Middleware para gestao de contas conjuntas OK
-- Proteçao de rotas de apis OK
-- Validaçoes (Zod/Yup) OK
-- fix: falha segurança, dados do email sendo vazados no cron job OK
-- Logout (Prioritario)
-- Transaçoes do tipo recorrentes (planejar)
+## Instruções para acessar o projeto localmente:
+
+1. Clone o repositório
+  * `git clone git@github.com:LeoFuna/expense-manager.git`.
+  * Entre na pasta do repositório que você acabou de clonar:
+    * `cd expense-manager`
+
+2. Instale as dependências:
+  * `npm install`
+
+3. Crie um arquivo `.env.local` na raiz da aplicação e insira os dados baseando-se no modelo `.env.local.sample`
+
+4. Inicie a aplicação:
+  * `npm run dev`
+
+---
+
+# A aplicação
+
+Ela pode ser vista em: [Acessar aplicação](https://expense-manager-pink.vercel.app/)
+
+#### Tela de Login
+![image](https://github.com/LeoFuna/expense-manager/assets/80538553/440984ca-6142-43a1-b2b5-dfa3903a845d)
+
+#### Home
+![image](https://github.com/LeoFuna/expense-manager/assets/80538553/fb984912-1b21-4efb-a33a-27aa5011d3e9)
+
+#### Menu para Nova Transação
+![image](https://github.com/LeoFuna/expense-manager/assets/80538553/c65419f7-c535-4366-9a8a-94038f013c6c)
+
+#### Nova Transação
+![image](https://github.com/LeoFuna/expense-manager/assets/80538553/99fa7af6-d7ce-44e9-9f06-fcac205b132a)
