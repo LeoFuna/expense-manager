@@ -2,7 +2,7 @@
 
 import { useDateContext } from "@/contexts/dateContext";
 import { useFetch } from "@/hooks/fetch";
-import { Spinner } from "../core/Spinner";
+import Skeleton from "../core/Skeleton";
 
 export default function AccountBalance({ email }: { email: string }) {
   const dateContext = useDateContext();
@@ -16,7 +16,7 @@ export default function AccountBalance({ email }: { email: string }) {
     }
   });
 
-  if (isValidating) return <Spinner />
+  if (isValidating) return <Skeleton className="h-5" />
 
   return (
     <h3 className="title-1 text-dark-75">R$ {data?.balance || 0}</h3>
