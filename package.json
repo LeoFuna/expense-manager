@@ -16,7 +16,7 @@
     "autoprefixer": "10.4.15",
     "date-fns": "^2.30.0",
     "eslint": "8.56.0",
-    "eslint-config-next": "13.5.2",
+    "eslint-config-next": "14.0.4",
     "firebase": "^10.4.0",
     "firebase-admin": "^11.10.1",
     "next": "13.5.2",
