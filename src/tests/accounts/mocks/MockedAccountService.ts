@@ -3,7 +3,6 @@ import { IAccountService } from "@/interfaces/services/AccountService";
 
 export default class MockAccountService implements IAccountService {
   create(data: IAccount): Promise<IAccount> {
-    console.log('to passando na implementaçao')
     return Promise.resolve(data);
   }
   checkIfIsANewUser(email: string): Promise<boolean> {
