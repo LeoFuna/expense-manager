@@ -1,19 +1,23 @@
 import AccountController from '@/controllers/AccountController';
 import { IAccount } from '@/interfaces/Account';
-import { describe, test, expect, jest } from '@jest/globals';
 import MockAccountService from './mocks/MockedAccountService';
+
+jest.mock('./mocks/MockedAccountService');
 
 describe('Account Controller', () => {
   describe('Create method', () => {
     test('should create with valid body', async () => {
-      const accountService = new MockAccountService();
-      const accountController = new AccountController(accountService);
       const validCreateBody: IAccount = {
         balanceInCents: 0,
         email: 'fake-email@example.com',
         monthInNumber: 2,
       }
-  
+      const accountService = new MockAccountService();
+      (accountService.create as jest.Mock).mockImplementation(() => {
+        return Promise.resolve(validCreateBody);
+      })
+      const accountController = new AccountController(accountService);
+
       const request: any = {
         body: JSON.stringify(validCreateBody),
         json: async () => validCreateBody,
@@ -26,12 +30,12 @@ describe('Account Controller', () => {
     });
 
     test('should throws an error on invalid body', async () => {
-      jest.mock('./mocks/MockedAccountService');
+      const accountService = new MockAccountService();
 
-      MockAccountService.prototype.create = jest.fn(async (body: IAccount): Promise<IAccount> => {
+      (accountService.create as jest.Mock).mockImplementation(() => {
         return Promise.reject('Fake error message...');
       });
-      const accountService = new MockAccountService();
+
       const accountController = new AccountController(accountService);
       const invalidCreateBody: any = {
         balanceInCents: 0,
