@@ -19,6 +19,6 @@ export default function AccountBalance({ email }: { email: string }) {
   if (isValidating) return <Skeleton className="h-5" />
 
   return (
-    <h3 className="title-1 text-dark-75">R$ {data?.balance || 0}</h3>
+    <h3 className="title-1 text-dark-75">R$ {data?.balance.toFixed(2) || 0}</h3>
   )
 }

@@ -20,7 +20,11 @@ export default function TransactionTotalBalance({ type, email }: { type: 'totalI
   
   return (
     <p className='title-2 text-sm'>
-      R$ {totalAmountInCents ? totalAmountInCents[type] / 100 : 0}
+      R$ {
+        totalAmountInCents
+        ? (totalAmountInCents[type] / 100).toFixed(2)
+        : 0
+      }
     </p>
   )
 }
