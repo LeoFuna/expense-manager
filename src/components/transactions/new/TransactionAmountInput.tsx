@@ -17,6 +17,16 @@ export default function TransactionAmountInput({
     return 'bg-danger-100';
   }
 
+  const manageAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    // Remove all non-numeric characters
+    const parsedValue = value.replace(/\D/g, '');
+ 
+    const formattedValue = Number(parsedValue)/100;
+    // Necessário para nao permitir que casos como: 0.5 ao inves de 0.50 sejam aceitos
+    e.target.value = formattedValue.toFixed(2);
+  }
+
   return (
     <input
       className={`text-light-100 title-x text-[50px]
@@ -24,9 +34,11 @@ export default function TransactionAmountInput({
         w-full ${getBgColor({ operationType })}
       `}
       type="number"
-      placeholder="0"
+      placeholder="0,00"
       id="transaction-value"
-      {...register('amount')}
+      {...register('amount', {
+        onChange: (e) => manageAmountChange(e)
+      })}
     />
   )
 }
