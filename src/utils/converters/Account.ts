@@ -1,5 +1,5 @@
 import { db } from "@/db/firebase";
-import { IAccountApi } from "@/interfaces/Account";
+import { IAccount, IAccountApi } from "@/interfaces/Account";
 import {
   DocumentData,
   FirestoreDataConverter,
@@ -29,12 +29,15 @@ const accountsConverter: FirestoreDataConverter<{ id?: string }> = {
 
 const accountConverter: FirestoreDataConverter<IAccountApi> = {
   toFirestore(account: IAccountApi): DocumentData {
-    return {
-      name: account?.name,
+    const dataToFirestore: IAccount = {
       balanceInCents: account.balanceInCents,
       monthInNumber: account.monthInNumber,
       email: account.email,
-    };
+    }
+
+    if (account?.name) dataToFirestore.name = account.name;
+
+    return dataToFirestore;
   },
 
   fromFirestore(
@@ -52,9 +55,11 @@ const accountConverter: FirestoreDataConverter<IAccountApi> = {
   },
 }
 
-export const accountsRef = () => collection(
-  db, 'accounts'
-).withConverter(accountsConverter);
+export const accountsRef = () => query(
+    collection(db, 'accounts'),
+    where('active', '==', true)
+  )
+  .withConverter(accountsConverter);
 
 export const accountRef = (email: string, year: number, id: string) => 
   doc(db, 'accounts', email, `${year}`, id)
