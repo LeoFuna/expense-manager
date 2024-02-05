@@ -50,7 +50,7 @@ export default function TransactionCard({ title, description, amount, date, icon
       </div>
       <div className='flex flex-col justify-between items-end w-4/12'>
         <h1 className={`regular-l ${getPriceColor()}`}>
-          R$ {amount}
+          R$ {amount.toFixed(2)}
         </h1>
         <h3 className='regular-xs text-light-20'>
           {date}
