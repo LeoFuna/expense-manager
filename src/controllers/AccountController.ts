@@ -24,9 +24,14 @@ export default class AccountController implements IAccountController {
   async create(req: NextRequest, res: NextResponse<unknown>): Promise<NextResponse<IAccount>> {
     const body: IAccount = await req.json();
 
-    const serviceResponse = await this.accountService.create(body);
+    try {
+      const serviceResponse = await this.accountService.create(body);
 
-    return NextResponse.json(serviceResponse, { status: 201 });
+      return NextResponse.json(serviceResponse, { status: 201 });
+    } catch (error: any) {
+      // TO DO: está hardcoded o statusCode, mas isso precisa ser ajustado
+      return NextResponse.json(error, { status: 400 });
+    }
   }
 
   async show(req: NextRequest, { params }: { params: { email: string } }): Promise<NextResponse<{balance: number} | null>> {
