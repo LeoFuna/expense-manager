@@ -29,11 +29,11 @@ describe('Account Controller', () => {
       expect(response.json()).resolves.toEqual(validCreateBody);
     });
 
-    test('should throws an error on invalid body', async () => {
+    test('should have 400 status with ZodError on invalid body', async () => {
       const accountService = new MockAccountService();
 
       (accountService.create as jest.Mock).mockImplementation(() => {
-        return Promise.reject('Fake error message...');
+        return Promise.reject('ZodError');
       });
 
       const accountController = new AccountController(accountService);
@@ -48,14 +48,10 @@ describe('Account Controller', () => {
       };
       const nextResponse: any = {}
       
-      let response: any;
-      try {
-        response = await accountController.create(request, nextResponse);
-      } catch (error: any) {
-        response = new Error(error);
-      }
+      const response = await accountController.create(request, nextResponse);
 
-      expect(response).toBeInstanceOf(Error);
+      expect(response.json()).resolves.toEqual('ZodError');
+      expect(response.status).toBe(400);
     })
   })
 })
