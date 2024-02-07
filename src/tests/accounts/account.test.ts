@@ -67,7 +67,21 @@ describe('Account API', () => {
       expect(JSON.parse(response.text)).toEqual({ message: 'Not authorized' });
     });
 
-    test.todo('should throws an error on invalid body');
+    test('should have 400 status with ZodError on invalid body', async () => {
+      (getToken as jest.Mock).mockImplementation(() => Promise.resolve('valid-jwt-token'));
+      const invalidPayload: any = {
+        balanceInCents: 0,
+        email: 'fake-email@gmail.com',
+      }
+
+      const response = await supertest(app)
+        .post('/api/accounts')
+        .send(invalidPayload)
+        .set('Accept', 'application/json')
+        .expect(400)
+
+      expect(JSON.parse(response?.text)?.name).toEqual('ZodError');   
+    });
 
     test('should create an account on valid data', async () => {
       (getToken as jest.Mock).mockImplementation(() => Promise.resolve('valid-jwt-token'));
