@@ -54,9 +54,9 @@ jest.mock('firebase/firestore', () => {
   }
 });
 
-// jest.mock('@/db/firebase-admin', () => {
-//   return { dbAdmin: jest.fn() }
-// });
+jest.mock('@/db/firebase-admin', () => {
+  return { dbAdmin: jest.fn() }
+});
 
 describe('Account API', () => {
   describe('Create account', () => {
