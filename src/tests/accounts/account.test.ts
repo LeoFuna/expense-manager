@@ -7,8 +7,6 @@ import supertest from 'supertest';
 import { IAccount } from '@/interfaces/Account';
 import { addDoc } from 'firebase/firestore';
 import { getToken } from 'next-auth/jwt';
-import { credential } from 'firebase-admin';
-import { dbAdmin } from '@/db/firebase-admin';
 
 let app: any;
 beforeAll(() => {
