@@ -31,6 +31,7 @@ No fim, o intuito é realmente saber exatamente quanto eu posso ainda gastar no 
 - React Hook Form
 - Typescript
 - Zod
+- Jest
   
 ---
 
@@ -42,6 +43,7 @@ No fim, o intuito é realmente saber exatamente quanto eu posso ainda gastar no 
 - Página de fallback de loading.
 - Dependabot para gestão de dependências.
 - Cron Jobs.
+- Testes unitário e e2e com Jest
 
 ## Instruções para acessar o projeto localmente:
 
