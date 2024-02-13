@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest"
+    "test": "jest",
+    "dev:emulator": "firebase emulators:start --import=./dir"
   },
   "engines": {
     "node": "18.16.0"

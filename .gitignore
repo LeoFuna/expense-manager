@@ -34,3 +34,14 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Ignorar arquivos específicos do Firebase Firestore e Realtime Database
+firestore.indexes.json
+firestore.rules
+.firebase/
+firebase-export-metadata.json
+firestore_export/
+
+# Outras entradas comuns no .gitignore para projetos JavaScript/Node.js
+*.log
+.DS_Store
