@@ -11,7 +11,7 @@
     "dev:emulator": "firebase emulators:start --import=./dir"
   },
   "engines": {
-    "node": "18.16.0"
+    "node": "22.x"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
